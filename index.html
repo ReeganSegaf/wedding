@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Habib & Humaira — Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══ INTRO ═══ -->
+<div id="intro">
+  <canvas id="bgInk"></canvas>
+  <div id="curtainL"><canvas id="cvL"></canvas></div>
+  <div id="curtainR"><canvas id="cvR"></canvas></div>
+
+  <!-- Content visible after curtains open -->
+  <div id="revealContent">
+    <div class="rc-inner">
+      <span class="rc-eye" id="rcEye">The Wedding of</span>
+      <h1 class="rc-init" id="rcInit">A <span class="rc-amp">&</span> H</h1>
+      <div class="rc-div" id="rcDiv"><span></span><i>◆</i><span></span></div>
+      <p class="rc-names" id="rcNames">Habib Aqil Assegaf & Humaira Bachktiar</p>
+      <p class="rc-date" id="rcDate">06 · 06 · 2026 · Sigli, Aceh</p>
+    </div>
+  </div>
+
+  <!-- Seal on curtain join -->
+  <div id="sealWrap">
+    <svg class="seal-circle" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="90" cy="90" r="86" stroke="url(#sg1)" stroke-width=".8" opacity=".5"/>
+      <circle cx="90" cy="90" r="80" stroke="url(#sg1)" stroke-width=".4" opacity=".25"/>
+      <circle cx="90" cy="90" r="74" fill="url(#sf)"/>
+      <circle cx="90" cy="90" r="60" stroke="#B8841E" stroke-width=".65" opacity=".38" stroke-dasharray="4 3"/>
+      <circle cx="90" cy="90" r="52" stroke="#B8841E" stroke-width=".4" opacity=".18"/>
+      <g opacity=".22" stroke="#C4922A" stroke-width=".5">
+        <line x1="90" y1="16" x2="90" y2="30"/><line x1="90" y1="150" x2="90" y2="164"/>
+        <line x1="16" y1="90" x2="30" y2="90"/><line x1="150" y1="90" x2="164" y2="90"/>
+        <line x1="38" y1="38" x2="48" y2="48"/><line x1="132" y1="38" x2="142" y2="48"/>
+        <line x1="38" y1="142" x2="48" y2="132"/><line x1="132" y1="142" x2="142" y2="132"/>
+      </g>
+      <!-- Bamboo motif inside seal -->
+      <line x1="72" y1="115" x2="72" y2="68" stroke="#D4A83A" stroke-width=".7" opacity=".4"/>
+      <line x1="80" y1="120" x2="80" y2="62" stroke="#D4A83A" stroke-width=".7" opacity=".5"/>
+      <line x1="88" y1="118" x2="88" y2="60" stroke="#D4A83A" stroke-width=".7" opacity=".55"/>
+      <line x1="96" y1="120" x2="96" y2="62" stroke="#D4A83A" stroke-width=".7" opacity=".5"/>
+      <line x1="104" y1="115" x2="104" y2="68" stroke="#D4A83A" stroke-width=".7" opacity=".4"/>
+      <!-- Nodes -->
+      <line x1="70" y1="88" x2="106" y2="88" stroke="#D4A83A" stroke-width=".5" opacity=".3"/>
+      <line x1="70" y1="78" x2="106" y2="78" stroke="#D4A83A" stroke-width=".5" opacity=".3"/>
+      <!-- Leaves from bamboo -->
+      <path d="M104 75 Q118 68 122 74" stroke="#D4A83A" stroke-width=".7" fill="none" opacity=".4"/>
+      <path d="M72 82 Q58 75 54 81" stroke="#D4A83A" stroke-width=".7" fill="none" opacity=".4"/>
+      <path d="M104 85 Q116 78 120 84" stroke="#D4A83A" stroke-width=".6" fill="none" opacity=".3"/>
+      <!-- Initials -->
+      <text x="88" y="112" text-anchor="middle" font-family="Playfair Display,Georgia,serif" font-size="18" font-style="italic" fill="#F0E8D8" opacity=".88" letter-spacing="3">A&amp;H</text>
+      <path d="M74 118 Q88 124 102 118" stroke="#D4A83A" stroke-width=".55" fill="none" opacity=".4"/>
+      <defs>
+        <radialGradient id="sf" cx="38%" cy="33%">
+          <stop offset="0%" stop-color="#2E4A1A"/>
+          <stop offset="45%" stop-color="#1C3010"/>
+          <stop offset="100%" stop-color="#0D1A08"/>
+        </radialGradient>
+        <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#E0B84A"/>
+          <stop offset="50%" stop-color="#B8841E"/>
+          <stop offset="100%" stop-color="#E0B84A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="seal-sub">06 · 06 · 2026 · Sigli, Aceh</span>
+  </div>
+
+  <div id="openWrap">
+    <button class="open-btn" id="openBtn">Buka Undangan</button>
+    <span class="open-sub">tekan untuk membuka</span>
+  </div>
+</div>
+
+<!-- ═══ MAIN ═══ -->
+<main id="main" class="hidden">
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <span class="lang-div">|</span>
+    <button class="lang-btn" data-lang="id">ID</button>
+  </div>
+  <button class="music-btn" id="musicBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </svg>
+  </button>
+
+  <!-- HERO -->
+  <section class="sec-hero" id="home">
+    <canvas id="heroBg"></canvas>
+    <div class="hero-in">
+      <div class="cbracket tl"><svg viewBox="0 0 50 50" fill="none"><path d="M4 46L4 4L46 4" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
+      <div class="cbracket tr"><svg viewBox="0 0 50 50" fill="none"><path d="M46 46L46 4L4 4" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
+      <div class="cbracket bl"><svg viewBox="0 0 50 50" fill="none"><path d="M4 4L4 46L46 46" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
+      <div class="cbracket br"><svg viewBox="0 0 50 50" fill="none"><path d="M46 4L46 46L4 46" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
+      <span class="hero-orn sr">✦</span>
+      <p class="hero-eyebrow sr">The Wedding of</p>
+      <h1 class="hero-init sr">A & H</h1>
+      <div class="orn sr" style="transition-delay:.28s"><span class="orn-line"></span><span class="orn-gem">◆</span><span class="orn-line"></span></div>
+      <p class="hero-names sr">Habib Aqil Assegaf & Humaira Bachktiar</p>
+      <p class="hero-date sr">06 Juni 2026 · Sigli, Aceh</p>
+      <div class="hero-floral sr" style="transition-delay:.5s">
+        <svg viewBox="0 0 260 60" fill="none">
+          <path d="M6 32 Q44 16 84 28 Q106 36 122 32" stroke="rgba(184,132,30,.4)" stroke-width=".8" fill="none"/>
+          <path d="M32 24 Q37 11 46 17" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
+          <path d="M54 19 Q59 6 66 12" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
+          <ellipse cx="46" cy="16" rx="3.5" ry="5.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(-20 46 16)"/>
+          <ellipse cx="66" cy="11" rx="3" ry="4.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(10 66 11)"/>
+          <path d="M122 32 L130 25 L138 32 L130 39 Z" stroke="rgba(184,132,30,.5)" stroke-width=".8" fill="none"/>
+          <path d="M254 32 Q216 16 176 28 Q154 36 138 32" stroke="rgba(184,132,30,.4)" stroke-width=".8" fill="none"/>
+          <path d="M228 24 Q223 11 214 17" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
+          <path d="M206 19 Q201 6 194 12" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
+          <ellipse cx="214" cy="16" rx="3.5" ry="5.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(20 214 16)"/>
+          <ellipse cx="194" cy="11" rx="3" ry="4.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(-10 194 11)"/>
+        </svg>
+      </div>
+      <div class="scroll-hint sr" style="transition-delay:.65s"><span>scroll</span><div class="scroll-arr"></div></div>
+    </div>
+  </section>
+
+  <!-- REVEAL DATE -->
+  <section class="sec-reveal bamboo-section" id="reveal-date">
+    <canvas id="bambooBg1" style="position:absolute;inset:0;z-index:0"></canvas>
+    <div style="position:relative;z-index:1">
+      <div class="sec-head">
+        <span class="sec-lbl sr">— Save the Date —</span>
+        <h2 class="sec-ttl sr">Reveal the Date</h2>
+        <p class="sec-sub sr">Gosok setiap lingkaran untuk menampilkan tanggal pernikahan kami</p>
+      </div>
+      <div class="scratch-row">
+        <div class="scratch-item sr">
+          <div class="s-lbl">Day</div>
+          <canvas class="s-canvas" id="sc-day" data-value="06"></canvas>
+          <div class="s-hint" id="hint-day">gosok di sini</div>
+        </div>
+        <div class="s-sep sr">•</div>
+        <div class="scratch-item sr" style="transition-delay:.1s">
+          <div class="s-lbl">Month</div>
+          <canvas class="s-canvas" id="sc-month" data-value="06"></canvas>
+          <div class="s-hint" id="hint-month">gosok di sini</div>
+        </div>
+        <div class="s-sep sr" style="transition-delay:.05s">•</div>
+        <div class="scratch-item sr" style="transition-delay:.2s">
+          <div class="s-lbl">Year</div>
+          <canvas class="s-canvas" id="sc-year" data-value="2026"></canvas>
+          <div class="s-hint" id="hint-year">gosok di sini</div>
+        </div>
+      </div>
+      <div class="confetti-box" id="confettiBox"></div>
+      <div class="reveal-msg" id="revealMsg">
+        <div class="r-orn">✦ ✦ ✦</div>
+        <p class="r-p">Kami akan menikah!</p>
+        <p class="r-p r-date">06 Juni 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="sec-events bamboo-section" id="events">
+    <canvas id="bambooBg2" style="position:absolute;inset:0;z-index:0"></canvas>
+    <div style="position:relative;z-index:1">
+      <div class="sec-head">
+        <span class="sec-lbl sr">— Our Celebration —</span>
+        <h2 class="sec-ttl sr">The Events</h2>
+      </div>
+      <div class="events-grid">
+        <div class="ev-card sr">
+          <div class="ev-in">
+            <div class="ev-icon">
+              <svg viewBox="0 0 66 66" fill="none">
+                <path d="M17 59L17 34Q17 14 33 14Q49 14 49 34L49 59" stroke="rgba(184,132,30,.55)" stroke-width=".9" fill="none"/>
+                <path d="M24 59L24 36Q24 22 33 22Q42 22 42 36L42 59" stroke="rgba(184,132,30,.3)" stroke-width=".6" fill="none"/>
+                <line x1="12" y1="59" x2="54" y2="59" stroke="rgba(184,132,30,.45)" stroke-width=".9"/>
+                <circle cx="33" cy="11" r="2.2" stroke="rgba(184,132,30,.6)" stroke-width=".65" fill="none"/>
+                <path d="M30.8 11 Q33 5.5 35.2 11" stroke="rgba(184,132,30,.45)" stroke-width=".6" fill="none"/>
+              </svg>
+            </div>
+            <p class="ev-type">Akad Nikah</p>
+            <div class="ev-div"><span></span><span class="ev-gem">◆</span><span></span></div>
+            <p class="ev-date">06 Juni 2026</p>
+            <p class="ev-day">Sabtu</p>
+            <p class="ev-time">10:00 – 12:00</p>
+            <div class="ev-loc">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              <span>Mesjid Blang Malu, Sigli</span>
+            </div>
+          </div>
+        </div>
+        <div class="ev-center sr">
+          <svg viewBox="0 0 36 100" fill="none">
+            <line x1="18" y1="0" x2="18" y2="42" stroke="rgba(184,132,30,.3)" stroke-width=".7"/>
+            <circle cx="18" cy="50" r="5" stroke="rgba(184,132,30,.45)" stroke-width=".7" fill="none"/>
+            <path d="M15.5 50L18 46L20.5 50L18 54Z" fill="rgba(184,132,30,.3)"/>
+            <line x1="18" y1="58" x2="18" y2="100" stroke="rgba(184,132,30,.3)" stroke-width=".7"/>
+          </svg>
+        </div>
+        <div class="ev-card sr" style="transition-delay:.15s">
+          <div class="ev-in">
+            <div class="ev-icon">
+              <svg viewBox="0 0 66 66" fill="none">
+                <rect x="16" y="34" width="34" height="6" rx="1.5" stroke="rgba(184,132,30,.55)" stroke-width=".75" fill="none"/>
+                <line x1="22" y1="40" x2="22" y2="52" stroke="rgba(184,132,30,.4)" stroke-width=".7"/>
+                <line x1="44" y1="40" x2="44" y2="52" stroke="rgba(184,132,30,.4)" stroke-width=".7"/>
+                <path d="M12 30Q16 27 16 34" stroke="rgba(184,132,30,.4)" stroke-width=".65" fill="none"/>
+                <path d="M54 30Q50 27 50 34" stroke="rgba(184,132,30,.4)" stroke-width=".65" fill="none"/>
+                <circle cx="29" cy="27" r="2.2" stroke="rgba(184,132,30,.5)" stroke-width=".6" fill="none"/>
+                <circle cx="37" cy="27" r="2.2" stroke="rgba(184,132,30,.5)" stroke-width=".6" fill="none"/>
+                <path d="M25 54Q33 59 41 54" stroke="rgba(184,132,30,.3)" stroke-width=".6" fill="none"/>
+              </svg>
+            </div>
+            <p class="ev-type">Resepsi Pernikahan</p>
+            <div class="ev-div"><span></span><span class="ev-gem">◆</span><span></span></div>
+            <p class="ev-date">07 Juni 2026</p>
+            <p class="ev-day">Ahad</p>
+            <p class="ev-time">11:00 – 14:00</p>
+            <div class="ev-loc">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              <span>Sanggeu, Jl. Garot, Sigli</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="addr-block sr">
+        <div class="addr-in">
+          <p class="addr-txt">Jalan Garot Jabal Ghafur, Sanggeu</p>
+          <p class="addr-txt">Sigli, Pidie · Aceh · Indonesia</p>
+          <a class="addr-link" href="https://maps.google.com/?q=Sanggeu+Sigli+Aceh" target="_blank" rel="noopener">Lihat di Peta →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENUE -->
+  <section class="sec-venue" id="venue">
+    <div class="sec-head">
+      <span class="sec-lbl sr">— The Venue —</span>
+      <h2 class="sec-ttl sr">Mesjid Blang Malu</h2>
+      <p class="sec-sub sr">Sigli, Aceh · Indonesia</p>
+    </div>
+    <div class="venue-frame sr">
+      <svg class="venue-svg" viewBox="0 0 560 250" fill="none">
+        <rect width="560" height="250" fill="rgba(13,18,8,.8)"/>
+        <text x="54" y="28" font-size="6" fill="rgba(184,132,30,.3)">✦</text>
+        <text x="468" y="22" font-size="5" fill="rgba(184,132,30,.25)">✦</text>
+        <!-- Bamboo trees flanking mosque -->
+        <line x1="28" y1="195" x2="28" y2="130" stroke="rgba(46,74,26,.7)" stroke-width="5"/>
+        <line x1="28" y1="162" x2="28" y2="155" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
+        <line x1="28" y1="147" x2="28" y2="140" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
+        <path d="M28 155 Q44 148 50 154" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
+        <path d="M28 140 Q14 133 8 139" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
+        <path d="M28 148 Q40 142 46 148" stroke="rgba(52,82,28,.5)" stroke-width="1" fill="none"/>
+        <line x1="44" y1="200" x2="44" y2="148" stroke="rgba(46,74,26,.55)" stroke-width="4"/>
+        <line x1="44" y1="174" x2="44" y2="168" stroke="rgba(46,74,26,.8)" stroke-width="6"/>
+        <path d="M44 170 Q56 164 62 170" stroke="rgba(52,82,28,.5)" stroke-width="1" fill="none"/>
+        <line x1="524" y1="195" x2="524" y2="130" stroke="rgba(46,74,26,.7)" stroke-width="5"/>
+        <line x1="524" y1="162" x2="524" y2="155" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
+        <line x1="524" y1="147" x2="524" y2="140" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
+        <path d="M524 155 Q508 148 502 154" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
+        <path d="M524 140 Q538 133 544 139" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
+        <line x1="510" y1="200" x2="510" y2="148" stroke="rgba(46,74,26,.55)" stroke-width="4"/>
+        <line x1="510" y1="174" x2="510" y2="168" stroke="rgba(46,74,26,.8)" stroke-width="6"/>
+        <path d="M510 170 Q498 164 492 170" stroke="rgba(52,82,28,.5)" stroke-width="1" fill="none"/>
+        <!-- Mosque -->
+        <rect x="100" y="190" width="360" height="14" rx="1" fill="rgba(46,74,26,.4)" stroke="rgba(184,132,30,.4)" stroke-width=".65"/>
+        <rect x="142" y="152" width="276" height="52" fill="rgba(19,26,12,.7)" stroke="rgba(184,132,30,.5)" stroke-width=".75"/>
+        <rect x="106" y="112" width="26" height="88" rx="1" fill="rgba(28,38,18,.8)" stroke="rgba(184,132,30,.5)" stroke-width=".7"/>
+        <rect x="102" y="144" width="34" height="4" rx=".5" fill="rgba(46,74,26,.5)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
+        <path d="M106 112 L119 93 L132 112" fill="rgba(28,38,18,.85)" stroke="rgba(184,132,30,.5)" stroke-width=".65"/>
+        <path d="M116 89 Q119 83 124 87 Q119 84 116 89" stroke="rgba(184,132,30,.65)" stroke-width=".75" fill="none"/>
+        <line x1="119" y1="87" x2="119" y2="93" stroke="rgba(184,132,30,.5)" stroke-width=".6"/>
+        <rect x="428" y="112" width="26" height="88" rx="1" fill="rgba(28,38,18,.8)" stroke="rgba(184,132,30,.5)" stroke-width=".7"/>
+        <rect x="424" y="144" width="34" height="4" rx=".5" fill="rgba(46,74,26,.5)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
+        <path d="M428 112 L441 93 L454 112" fill="rgba(28,38,18,.85)" stroke="rgba(184,132,30,.5)" stroke-width=".65"/>
+        <path d="M438 89 Q441 83 446 87 Q441 84 438 89" stroke="rgba(184,132,30,.65)" stroke-width=".75" fill="none"/>
+        <line x1="441" y1="87" x2="441" y2="93" stroke="rgba(184,132,30,.5)" stroke-width=".6"/>
+        <path d="M192 152 Q192 103 280 98 Q368 103 368 152" fill="rgba(28,38,18,.85)" stroke="rgba(184,132,30,.55)" stroke-width=".85"/>
+        <path d="M273 94 Q280 86 288 91 Q280 87 273 94" stroke="rgba(184,132,30,.7)" stroke-width=".95" fill="none"/>
+        <line x1="280" y1="89" x2="280" y2="98" stroke="rgba(184,132,30,.55)" stroke-width=".65"/>
+        <path d="M142 152 Q142 133 170 130 Q198 133 198 152" fill="rgba(22,32,14,.8)" stroke="rgba(184,132,30,.35)" stroke-width=".65"/>
+        <path d="M362 152 Q362 133 390 130 Q418 133 418 152" fill="rgba(22,32,14,.8)" stroke="rgba(184,132,30,.35)" stroke-width=".65"/>
+        <path d="M160 170 L160 158 Q167 152 174 158 L174 170Z" fill="rgba(60,90,140,.3)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
+        <path d="M386 170 L386 158 Q393 152 400 158 L400 170Z" fill="rgba(60,90,140,.3)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
+        <path d="M258 204 L258 167 Q280 155 302 167 L302 204Z" fill="rgba(22,32,14,.9)" stroke="rgba(184,132,30,.5)" stroke-width=".7"/>
+        <path d="M264 167 Q280 160 296 167" stroke="rgba(184,132,30,.25)" stroke-width=".5" fill="none"/>
+        <path d="M212 170 L212 159 Q218 153 224 159 L224 170Z" fill="rgba(60,90,140,.25)" stroke="rgba(184,132,30,.3)" stroke-width=".5"/>
+        <path d="M336 170 L336 159 Q342 153 348 159 L348 170Z" fill="rgba(60,90,140,.25)" stroke="rgba(184,132,30,.3)" stroke-width=".5"/>
+        <rect x="4" y="4" width="552" height="242" stroke="rgba(184,132,30,.18)" stroke-width=".5" fill="none"/>
+      </svg>
+    </div>
+    <div class="venue-dates sr" style="transition-delay:.2s">
+      <div class="vd-pill"><span>Akad Nikah</span><strong>06 Juni 2026</strong></div>
+      <div class="vd-sep">—</div>
+      <div class="vd-pill"><span>Resepsi</span><strong>07 Juni 2026</strong></div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="sec-cd bamboo-section" id="countdown">
+    <canvas id="bambooBg3" style="position:absolute;inset:0;z-index:0"></canvas>
+    <div style="position:relative;z-index:1">
+      <div class="sec-head">
+        <span class="sec-lbl sr">— Menghitung Hari —</span>
+        <h2 class="sec-ttl sr">Counting Down</h2>
+        <p class="sec-sub sr">Hingga kami mengucapkan <em>ijab kabul</em></p>
+      </div>
+      <div class="cd-grid sr">
+        <div class="cd-box"><span class="cd-num" id="cdD">--</span><span class="cd-lbl">Hari</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><span class="cd-num" id="cdH">--</span><span class="cd-lbl">Jam</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><span class="cd-num" id="cdM">--</span><span class="cd-lbl">Menit</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><span class="cd-num" id="cdS">--</span><span class="cd-lbl">Detik</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIFTS -->
+  <section class="sec-gifts" id="gifts">
+    <div class="sec-head">
+      <span class="sec-lbl sr">— Hadiah Pernikahan —</span>
+      <h2 class="sec-ttl sr">Gracious Giving</h2>
+      <p class="sec-sub sr">Kehadiran Anda adalah hadiah terbesar kami.<br>Jika berkenan memberikan, berikut detailnya.</p>
+    </div>
+    <div class="gift-card sr">
+      <div class="gift-in">
+        <p class="gift-bank-nm">Bank Rakyat Indonesia (BRI)</p>
+        <div class="gift-acc">
+          <span class="gift-acc-num" id="accNum">1234 5678 9012 3456</span>
+          <button class="copy-btn" id="copyBtn">Salin</button>
+        </div>
+        <p class="gift-holder">a.n. Habib Aqil / Humaira</p>
+        <div class="orn" style="margin:1rem 0"><span class="orn-line"></span><span class="orn-gem">◆</span><span class="orn-line"></span></div>
+        <p class="gift-note">atau sampaikan langsung di lokasi acara</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="sec-close">
+    <canvas id="closeBg"></canvas>
+    <div class="close-in sr">
+      <div class="close-orn">✦ ✦ ✦</div>
+      <h2 class="close-init">A & H</h2>
+      <p class="close-quote">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</p>
+      <p class="close-ref">— QS. Ar-Rum : 21</p>
+      <div class="close-div"><span></span><span>◆</span><span></span></div>
+      <p class="close-msg">Kami dengan tulus mengharapkan kehadiran Anda.</p>
+      <p class="close-date">06 · 06 · 2026</p>
+    </div>
+  </section>
+  <footer><p>With love, Habib & Humaira · 2026</p></footer>
+</main>
+<audio id="bgAudio" loop></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
