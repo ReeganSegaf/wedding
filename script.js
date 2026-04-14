@@ -17,7 +17,7 @@
 /* ============================================================
    CONSTANTS
 ============================================================ */
-const WEDDING_DATE = new Date('2026-06-06T08:00:00'); // 06 Juni 2026, 08:00 WIB
+const WEDDING_DATE = new Date('2026-06-07T08:00:00'); // 06 Juni 2026, 08:00 WIB
 const SCRATCH_THRESHOLD = 0.90;   // 90% cleared triggers confetti
 
 
