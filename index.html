@@ -1,366 +1,622 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Habib & Humaira — Wedding Invitation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Undangan Pernikahan — Habib Aqil Assegaf & Humaira" />
+  <title>Habib Aqil Assegaf & Humaira — Undangan Pernikahan</title>
+
+  <!-- Google Fonts: Playfair Display + Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<!-- ═══ INTRO ═══ -->
-<div id="intro">
-  <canvas id="bgInk"></canvas>
-  <div id="curtainL"><canvas id="cvL"></canvas></div>
-  <div id="curtainR"><canvas id="cvR"></canvas></div>
+  <!-- ============================================================
+       INTRO SCREEN — Theater Curtains
+  ============================================================ -->
+  <section id="intro-screen" aria-label="Invitation intro">
 
-  <!-- Content visible after curtains open -->
-  <div id="revealContent">
-    <div class="rc-inner">
-      <span class="rc-eye" id="rcEye">The Wedding of</span>
-      <h1 class="rc-init" id="rcInit">A <span class="rc-amp">&</span> H</h1>
-      <div class="rc-div" id="rcDiv"><span></span><i>◆</i><span></span></div>
-      <p class="rc-names" id="rcNames">Habib Aqil Assegaf & Humaira Bachktiar</p>
-      <p class="rc-date" id="rcDate">06 · 06 · 2026 · Sigli, Aceh</p>
+    <!-- Curtain left panel -->
+    <div class="curtain curtain--left" id="curtain-left">
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__rope"></div>
     </div>
-  </div>
 
-  <!-- Seal on curtain join -->
-  <div id="sealWrap">
-    <svg class="seal-circle" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="90" cy="90" r="86" stroke="url(#sg1)" stroke-width=".8" opacity=".5"/>
-      <circle cx="90" cy="90" r="80" stroke="url(#sg1)" stroke-width=".4" opacity=".25"/>
-      <circle cx="90" cy="90" r="74" fill="url(#sf)"/>
-      <circle cx="90" cy="90" r="60" stroke="#B8841E" stroke-width=".65" opacity=".38" stroke-dasharray="4 3"/>
-      <circle cx="90" cy="90" r="52" stroke="#B8841E" stroke-width=".4" opacity=".18"/>
-      <g opacity=".22" stroke="#C4922A" stroke-width=".5">
-        <line x1="90" y1="16" x2="90" y2="30"/><line x1="90" y1="150" x2="90" y2="164"/>
-        <line x1="16" y1="90" x2="30" y2="90"/><line x1="150" y1="90" x2="164" y2="90"/>
-        <line x1="38" y1="38" x2="48" y2="48"/><line x1="132" y1="38" x2="142" y2="48"/>
-        <line x1="38" y1="142" x2="48" y2="132"/><line x1="132" y1="142" x2="142" y2="132"/>
-      </g>
-      <!-- Bamboo motif inside seal -->
-      <line x1="72" y1="115" x2="72" y2="68" stroke="#D4A83A" stroke-width=".7" opacity=".4"/>
-      <line x1="80" y1="120" x2="80" y2="62" stroke="#D4A83A" stroke-width=".7" opacity=".5"/>
-      <line x1="88" y1="118" x2="88" y2="60" stroke="#D4A83A" stroke-width=".7" opacity=".55"/>
-      <line x1="96" y1="120" x2="96" y2="62" stroke="#D4A83A" stroke-width=".7" opacity=".5"/>
-      <line x1="104" y1="115" x2="104" y2="68" stroke="#D4A83A" stroke-width=".7" opacity=".4"/>
-      <!-- Nodes -->
-      <line x1="70" y1="88" x2="106" y2="88" stroke="#D4A83A" stroke-width=".5" opacity=".3"/>
-      <line x1="70" y1="78" x2="106" y2="78" stroke="#D4A83A" stroke-width=".5" opacity=".3"/>
-      <!-- Leaves from bamboo -->
-      <path d="M104 75 Q118 68 122 74" stroke="#D4A83A" stroke-width=".7" fill="none" opacity=".4"/>
-      <path d="M72 82 Q58 75 54 81" stroke="#D4A83A" stroke-width=".7" fill="none" opacity=".4"/>
-      <path d="M104 85 Q116 78 120 84" stroke="#D4A83A" stroke-width=".6" fill="none" opacity=".3"/>
-      <!-- Initials -->
-      <text x="88" y="112" text-anchor="middle" font-family="Playfair Display,Georgia,serif" font-size="18" font-style="italic" fill="#F0E8D8" opacity=".88" letter-spacing="3">A&amp;H</text>
-      <path d="M74 118 Q88 124 102 118" stroke="#D4A83A" stroke-width=".55" fill="none" opacity=".4"/>
-      <defs>
-        <radialGradient id="sf" cx="38%" cy="33%">
-          <stop offset="0%" stop-color="#2E4A1A"/>
-          <stop offset="45%" stop-color="#1C3010"/>
-          <stop offset="100%" stop-color="#0D1A08"/>
-        </radialGradient>
-        <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#E0B84A"/>
-          <stop offset="50%" stop-color="#B8841E"/>
-          <stop offset="100%" stop-color="#E0B84A"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <span class="seal-sub">06 · 06 · 2026 · Sigli, Aceh</span>
-  </div>
-
-  <div id="openWrap">
-    <button class="open-btn" id="openBtn">Buka Undangan</button>
-    <span class="open-sub">tekan untuk membuka</span>
-  </div>
-</div>
-
-<!-- ═══ MAIN ═══ -->
-<main id="main" class="hidden">
-  <div class="lang-toggle">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <span class="lang-div">|</span>
-    <button class="lang-btn" data-lang="id">ID</button>
-  </div>
-  <button class="music-btn" id="musicBtn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-    </svg>
-  </button>
-
-  <!-- HERO -->
-  <section class="sec-hero" id="home">
-    <canvas id="heroBg"></canvas>
-    <div class="hero-in">
-      <div class="cbracket tl"><svg viewBox="0 0 50 50" fill="none"><path d="M4 46L4 4L46 4" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
-      <div class="cbracket tr"><svg viewBox="0 0 50 50" fill="none"><path d="M46 46L46 4L4 4" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
-      <div class="cbracket bl"><svg viewBox="0 0 50 50" fill="none"><path d="M4 4L4 46L46 46" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
-      <div class="cbracket br"><svg viewBox="0 0 50 50" fill="none"><path d="M46 4L46 46L4 46" stroke="#B8841E" stroke-width=".7" opacity=".4"/></svg></div>
-      <span class="hero-orn sr">✦</span>
-      <p class="hero-eyebrow sr">The Wedding of</p>
-      <h1 class="hero-init sr">A & H</h1>
-      <div class="orn sr" style="transition-delay:.28s"><span class="orn-line"></span><span class="orn-gem">◆</span><span class="orn-line"></span></div>
-      <p class="hero-names sr">Habib Aqil Assegaf & Humaira Bachktiar</p>
-      <p class="hero-date sr">06 Juni 2026 · Sigli, Aceh</p>
-      <div class="hero-floral sr" style="transition-delay:.5s">
-        <svg viewBox="0 0 260 60" fill="none">
-          <path d="M6 32 Q44 16 84 28 Q106 36 122 32" stroke="rgba(184,132,30,.4)" stroke-width=".8" fill="none"/>
-          <path d="M32 24 Q37 11 46 17" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
-          <path d="M54 19 Q59 6 66 12" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
-          <ellipse cx="46" cy="16" rx="3.5" ry="5.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(-20 46 16)"/>
-          <ellipse cx="66" cy="11" rx="3" ry="4.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(10 66 11)"/>
-          <path d="M122 32 L130 25 L138 32 L130 39 Z" stroke="rgba(184,132,30,.5)" stroke-width=".8" fill="none"/>
-          <path d="M254 32 Q216 16 176 28 Q154 36 138 32" stroke="rgba(184,132,30,.4)" stroke-width=".8" fill="none"/>
-          <path d="M228 24 Q223 11 214 17" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
-          <path d="M206 19 Q201 6 194 12" stroke="rgba(184,132,30,.35)" stroke-width=".7" fill="none"/>
-          <ellipse cx="214" cy="16" rx="3.5" ry="5.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(20 214 16)"/>
-          <ellipse cx="194" cy="11" rx="3" ry="4.5" stroke="rgba(184,132,30,.3)" stroke-width=".7" fill="none" transform="rotate(-10 194 11)"/>
-        </svg>
-      </div>
-      <div class="scroll-hint sr" style="transition-delay:.65s"><span>scroll</span><div class="scroll-arr"></div></div>
+    <!-- Curtain right panel -->
+    <div class="curtain curtain--right" id="curtain-right">
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__fold"></div>
+      <div class="curtain__rope"></div>
     </div>
-  </section>
 
-  <!-- REVEAL DATE -->
-  <section class="sec-reveal bamboo-section" id="reveal-date">
-    <canvas id="bambooBg1" style="position:absolute;inset:0;z-index:0"></canvas>
-    <div style="position:relative;z-index:1">
-      <div class="sec-head">
-        <span class="sec-lbl sr">— Save the Date —</span>
-        <h2 class="sec-ttl sr">Reveal the Date</h2>
-        <p class="sec-sub sr">Gosok setiap lingkaran untuk menampilkan tanggal pernikahan kami</p>
-      </div>
-      <div class="scratch-row">
-        <div class="scratch-item sr">
-          <div class="s-lbl">Day</div>
-          <canvas class="s-canvas" id="sc-day" data-value="06"></canvas>
-          <div class="s-hint" id="hint-day">gosok di sini</div>
-        </div>
-        <div class="s-sep sr">•</div>
-        <div class="scratch-item sr" style="transition-delay:.1s">
-          <div class="s-lbl">Month</div>
-          <canvas class="s-canvas" id="sc-month" data-value="06"></canvas>
-          <div class="s-hint" id="hint-month">gosok di sini</div>
-        </div>
-        <div class="s-sep sr" style="transition-delay:.05s">•</div>
-        <div class="scratch-item sr" style="transition-delay:.2s">
-          <div class="s-lbl">Year</div>
-          <canvas class="s-canvas" id="sc-year" data-value="2026"></canvas>
-          <div class="s-hint" id="hint-year">gosok di sini</div>
-        </div>
-      </div>
-      <div class="confetti-box" id="confettiBox"></div>
-      <div class="reveal-msg" id="revealMsg">
-        <div class="r-orn">✦ ✦ ✦</div>
-        <p class="r-p">Kami akan menikah!</p>
-        <p class="r-p r-date">06 Juni 2026</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- EVENTS -->
-  <section class="sec-events bamboo-section" id="events">
-    <canvas id="bambooBg2" style="position:absolute;inset:0;z-index:0"></canvas>
-    <div style="position:relative;z-index:1">
-      <div class="sec-head">
-        <span class="sec-lbl sr">— Our Celebration —</span>
-        <h2 class="sec-ttl sr">The Events</h2>
-      </div>
-      <div class="events-grid">
-        <div class="ev-card sr">
-          <div class="ev-in">
-            <div class="ev-icon">
-              <svg viewBox="0 0 66 66" fill="none">
-                <path d="M17 59L17 34Q17 14 33 14Q49 14 49 34L49 59" stroke="rgba(184,132,30,.55)" stroke-width=".9" fill="none"/>
-                <path d="M24 59L24 36Q24 22 33 22Q42 22 42 36L42 59" stroke="rgba(184,132,30,.3)" stroke-width=".6" fill="none"/>
-                <line x1="12" y1="59" x2="54" y2="59" stroke="rgba(184,132,30,.45)" stroke-width=".9"/>
-                <circle cx="33" cy="11" r="2.2" stroke="rgba(184,132,30,.6)" stroke-width=".65" fill="none"/>
-                <path d="M30.8 11 Q33 5.5 35.2 11" stroke="rgba(184,132,30,.45)" stroke-width=".6" fill="none"/>
-              </svg>
-            </div>
-            <p class="ev-type">Akad Nikah</p>
-            <div class="ev-div"><span></span><span class="ev-gem">◆</span><span></span></div>
-            <p class="ev-date">06 Juni 2026</p>
-            <p class="ev-day">Sabtu</p>
-            <p class="ev-time">10:00 – 12:00</p>
-            <div class="ev-loc">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              <span>Mesjid Blang Malu, Sigli</span>
-            </div>
-          </div>
-        </div>
-        <div class="ev-center sr">
-          <svg viewBox="0 0 36 100" fill="none">
-            <line x1="18" y1="0" x2="18" y2="42" stroke="rgba(184,132,30,.3)" stroke-width=".7"/>
-            <circle cx="18" cy="50" r="5" stroke="rgba(184,132,30,.45)" stroke-width=".7" fill="none"/>
-            <path d="M15.5 50L18 46L20.5 50L18 54Z" fill="rgba(184,132,30,.3)"/>
-            <line x1="18" y1="58" x2="18" y2="100" stroke="rgba(184,132,30,.3)" stroke-width=".7"/>
-          </svg>
-        </div>
-        <div class="ev-card sr" style="transition-delay:.15s">
-          <div class="ev-in">
-            <div class="ev-icon">
-              <svg viewBox="0 0 66 66" fill="none">
-                <rect x="16" y="34" width="34" height="6" rx="1.5" stroke="rgba(184,132,30,.55)" stroke-width=".75" fill="none"/>
-                <line x1="22" y1="40" x2="22" y2="52" stroke="rgba(184,132,30,.4)" stroke-width=".7"/>
-                <line x1="44" y1="40" x2="44" y2="52" stroke="rgba(184,132,30,.4)" stroke-width=".7"/>
-                <path d="M12 30Q16 27 16 34" stroke="rgba(184,132,30,.4)" stroke-width=".65" fill="none"/>
-                <path d="M54 30Q50 27 50 34" stroke="rgba(184,132,30,.4)" stroke-width=".65" fill="none"/>
-                <circle cx="29" cy="27" r="2.2" stroke="rgba(184,132,30,.5)" stroke-width=".6" fill="none"/>
-                <circle cx="37" cy="27" r="2.2" stroke="rgba(184,132,30,.5)" stroke-width=".6" fill="none"/>
-                <path d="M25 54Q33 59 41 54" stroke="rgba(184,132,30,.3)" stroke-width=".6" fill="none"/>
-              </svg>
-            </div>
-            <p class="ev-type">Resepsi Pernikahan</p>
-            <div class="ev-div"><span></span><span class="ev-gem">◆</span><span></span></div>
-            <p class="ev-date">07 Juni 2026</p>
-            <p class="ev-day">Ahad</p>
-            <p class="ev-time">11:00 – 14:00</p>
-            <div class="ev-loc">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              <span>Sanggeu, Jl. Garot, Sigli</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="addr-block sr">
-        <div class="addr-in">
-          <p class="addr-txt">Jalan Garot Jabal Ghafur, Sanggeu</p>
-          <p class="addr-txt">Sigli, Pidie · Aceh · Indonesia</p>
-          <a class="addr-link" href="https://maps.google.com/?q=Sanggeu+Sigli+Aceh" target="_blank" rel="noopener">Lihat di Peta →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- VENUE -->
-  <section class="sec-venue" id="venue">
-    <div class="sec-head">
-      <span class="sec-lbl sr">— The Venue —</span>
-      <h2 class="sec-ttl sr">Mesjid Blang Malu</h2>
-      <p class="sec-sub sr">Sigli, Aceh · Indonesia</p>
-    </div>
-    <div class="venue-frame sr">
-      <svg class="venue-svg" viewBox="0 0 560 250" fill="none">
-        <rect width="560" height="250" fill="rgba(13,18,8,.8)"/>
-        <text x="54" y="28" font-size="6" fill="rgba(184,132,30,.3)">✦</text>
-        <text x="468" y="22" font-size="5" fill="rgba(184,132,30,.25)">✦</text>
-        <!-- Bamboo trees flanking mosque -->
-        <line x1="28" y1="195" x2="28" y2="130" stroke="rgba(46,74,26,.7)" stroke-width="5"/>
-        <line x1="28" y1="162" x2="28" y2="155" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
-        <line x1="28" y1="147" x2="28" y2="140" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
-        <path d="M28 155 Q44 148 50 154" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
-        <path d="M28 140 Q14 133 8 139" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
-        <path d="M28 148 Q40 142 46 148" stroke="rgba(52,82,28,.5)" stroke-width="1" fill="none"/>
-        <line x1="44" y1="200" x2="44" y2="148" stroke="rgba(46,74,26,.55)" stroke-width="4"/>
-        <line x1="44" y1="174" x2="44" y2="168" stroke="rgba(46,74,26,.8)" stroke-width="6"/>
-        <path d="M44 170 Q56 164 62 170" stroke="rgba(52,82,28,.5)" stroke-width="1" fill="none"/>
-        <line x1="524" y1="195" x2="524" y2="130" stroke="rgba(46,74,26,.7)" stroke-width="5"/>
-        <line x1="524" y1="162" x2="524" y2="155" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
-        <line x1="524" y1="147" x2="524" y2="140" stroke="rgba(46,74,26,.9)" stroke-width="8"/>
-        <path d="M524 155 Q508 148 502 154" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
-        <path d="M524 140 Q538 133 544 139" stroke="rgba(52,82,28,.6)" stroke-width="1.2" fill="none"/>
-        <line x1="510" y1="200" x2="510" y2="148" stroke="rgba(46,74,26,.55)" stroke-width="4"/>
-        <line x1="510" y1="174" x2="510" y2="168" stroke="rgba(46,74,26,.8)" stroke-width="6"/>
-        <path d="M510 170 Q498 164 492 170" stroke="rgba(52,82,28,.5)" stroke-width="1" fill="none"/>
-        <!-- Mosque -->
-        <rect x="100" y="190" width="360" height="14" rx="1" fill="rgba(46,74,26,.4)" stroke="rgba(184,132,30,.4)" stroke-width=".65"/>
-        <rect x="142" y="152" width="276" height="52" fill="rgba(19,26,12,.7)" stroke="rgba(184,132,30,.5)" stroke-width=".75"/>
-        <rect x="106" y="112" width="26" height="88" rx="1" fill="rgba(28,38,18,.8)" stroke="rgba(184,132,30,.5)" stroke-width=".7"/>
-        <rect x="102" y="144" width="34" height="4" rx=".5" fill="rgba(46,74,26,.5)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
-        <path d="M106 112 L119 93 L132 112" fill="rgba(28,38,18,.85)" stroke="rgba(184,132,30,.5)" stroke-width=".65"/>
-        <path d="M116 89 Q119 83 124 87 Q119 84 116 89" stroke="rgba(184,132,30,.65)" stroke-width=".75" fill="none"/>
-        <line x1="119" y1="87" x2="119" y2="93" stroke="rgba(184,132,30,.5)" stroke-width=".6"/>
-        <rect x="428" y="112" width="26" height="88" rx="1" fill="rgba(28,38,18,.8)" stroke="rgba(184,132,30,.5)" stroke-width=".7"/>
-        <rect x="424" y="144" width="34" height="4" rx=".5" fill="rgba(46,74,26,.5)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
-        <path d="M428 112 L441 93 L454 112" fill="rgba(28,38,18,.85)" stroke="rgba(184,132,30,.5)" stroke-width=".65"/>
-        <path d="M438 89 Q441 83 446 87 Q441 84 438 89" stroke="rgba(184,132,30,.65)" stroke-width=".75" fill="none"/>
-        <line x1="441" y1="87" x2="441" y2="93" stroke="rgba(184,132,30,.5)" stroke-width=".6"/>
-        <path d="M192 152 Q192 103 280 98 Q368 103 368 152" fill="rgba(28,38,18,.85)" stroke="rgba(184,132,30,.55)" stroke-width=".85"/>
-        <path d="M273 94 Q280 86 288 91 Q280 87 273 94" stroke="rgba(184,132,30,.7)" stroke-width=".95" fill="none"/>
-        <line x1="280" y1="89" x2="280" y2="98" stroke="rgba(184,132,30,.55)" stroke-width=".65"/>
-        <path d="M142 152 Q142 133 170 130 Q198 133 198 152" fill="rgba(22,32,14,.8)" stroke="rgba(184,132,30,.35)" stroke-width=".65"/>
-        <path d="M362 152 Q362 133 390 130 Q418 133 418 152" fill="rgba(22,32,14,.8)" stroke="rgba(184,132,30,.35)" stroke-width=".65"/>
-        <path d="M160 170 L160 158 Q167 152 174 158 L174 170Z" fill="rgba(60,90,140,.3)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
-        <path d="M386 170 L386 158 Q393 152 400 158 L400 170Z" fill="rgba(60,90,140,.3)" stroke="rgba(184,132,30,.35)" stroke-width=".55"/>
-        <path d="M258 204 L258 167 Q280 155 302 167 L302 204Z" fill="rgba(22,32,14,.9)" stroke="rgba(184,132,30,.5)" stroke-width=".7"/>
-        <path d="M264 167 Q280 160 296 167" stroke="rgba(184,132,30,.25)" stroke-width=".5" fill="none"/>
-        <path d="M212 170 L212 159 Q218 153 224 159 L224 170Z" fill="rgba(60,90,140,.25)" stroke="rgba(184,132,30,.3)" stroke-width=".5"/>
-        <path d="M336 170 L336 159 Q342 153 348 159 L348 170Z" fill="rgba(60,90,140,.25)" stroke="rgba(184,132,30,.3)" stroke-width=".5"/>
-        <rect x="4" y="4" width="552" height="242" stroke="rgba(184,132,30,.18)" stroke-width=".5" fill="none"/>
+    <!-- Curtain top valance -->
+    <div class="curtain__valance" aria-hidden="true">
+      <svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 Q100,80 200,40 Q300,0 400,60 Q500,80 600,40 Q700,0 800,60 Q900,80 1000,40 Q1100,0 1200,40 L1200,0 Z" fill="#6B1A2A"/>
+        <path d="M0,0 Q100,70 200,30 Q300,10 400,50 Q500,70 600,30 Q700,10 800,50 Q900,70 1000,30 Q1100,10 1200,35 L1200,0 Z" fill="#4A0E1A" opacity="0.6"/>
       </svg>
     </div>
-    <div class="venue-dates sr" style="transition-delay:.2s">
-      <div class="vd-pill"><span>Akad Nikah</span><strong>06 Juni 2026</strong></div>
-      <div class="vd-sep">—</div>
-      <div class="vd-pill"><span>Resepsi</span><strong>07 Juni 2026</strong></div>
-    </div>
-  </section>
 
-  <!-- COUNTDOWN -->
-  <section class="sec-cd bamboo-section" id="countdown">
-    <canvas id="bambooBg3" style="position:absolute;inset:0;z-index:0"></canvas>
-    <div style="position:relative;z-index:1">
-      <div class="sec-head">
-        <span class="sec-lbl sr">— Menghitung Hari —</span>
-        <h2 class="sec-ttl sr">Counting Down</h2>
-        <p class="sec-sub sr">Hingga kami mengucapkan <em>ijab kabul</em></p>
+    <!-- Content revealed behind curtains -->
+    <div class="intro__reveal" id="intro-reveal" aria-live="polite">
+      <!-- Decorative monogram -->
+      <div class="intro__monogram">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="60" cy="60" r="55" fill="none" stroke="#9C7A2E" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#9C7A2E" stroke-width="0.3" opacity="0.4"/>
+          <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Cormorant Garamond, serif" font-size="36" fill="#9C7A2E" font-style="italic" letter-spacing="2">A&amp;H</text>
+          <text x="50%" y="72%" text-anchor="middle" dominant-baseline="middle" font-family="Cormorant Garamond, serif" font-size="7" fill="#9C7A2E" letter-spacing="3">✦ ✦ ✦</text>
+        </svg>
       </div>
-      <div class="cd-grid sr">
-        <div class="cd-box"><span class="cd-num" id="cdD">--</span><span class="cd-lbl">Hari</span></div>
-        <div class="cd-sep">:</div>
-        <div class="cd-box"><span class="cd-num" id="cdH">--</span><span class="cd-lbl">Jam</span></div>
-        <div class="cd-sep">:</div>
-        <div class="cd-box"><span class="cd-num" id="cdM">--</span><span class="cd-lbl">Menit</span></div>
-        <div class="cd-sep">:</div>
-        <div class="cd-box"><span class="cd-num" id="cdS">--</span><span class="cd-lbl">Detik</span></div>
+      <p class="intro__label">bersatu dalam ikatan suci</p>
+      <h1 class="intro__couple">Habib Aqil Assegaf<br/><span class="intro__ampersand">&amp;</span><br/>Humaira</h1>
+      <p class="intro__subtitle">dengan penuh kebahagiaan mengundang<br/>Bapak / Ibu / Saudara/i untuk hadir</p>
+      <div class="intro__divider" aria-hidden="true">
+        <svg viewBox="0 0 200 12" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="6" x2="80" y2="6" stroke="#9C7A2E" stroke-width="0.5"/>
+          <polygon points="90,6 95,2 100,6 95,10" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+          <line x1="110" y1="6" x2="200" y2="6" stroke="#9C7A2E" stroke-width="0.5"/>
+        </svg>
       </div>
     </div>
+
+    <!-- Open Invitation Button (in front of curtains) -->
+    <div class="intro__cta" id="intro-cta">
+      <p class="intro__pretext">— Anda diundang dengan hormat —</p>
+      <button class="btn-open" id="btn-open-invitation" aria-label="Buka undangan pernikahan">
+        <span class="btn-open__text">Buka Undangan</span>
+        <span class="btn-open__line" aria-hidden="true"></span>
+      </button>
+    </div>
+
   </section>
 
-  <!-- GIFTS -->
-  <section class="sec-gifts" id="gifts">
-    <div class="sec-head">
-      <span class="sec-lbl sr">— Hadiah Pernikahan —</span>
-      <h2 class="sec-ttl sr">Gracious Giving</h2>
-      <p class="sec-sub sr">Kehadiran Anda adalah hadiah terbesar kami.<br>Jika berkenan memberikan, berikut detailnya.</p>
+
+  <!-- ============================================================
+       MAIN INVITATION CONTENT
+  ============================================================ -->
+  <main id="main-content" aria-label="Wedding invitation content">
+
+    <!-- Ornament Bismillah -->
+    <div class="bismillah-ornament" aria-hidden="true">
+      <svg viewBox="0 0 300 30" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="15" x2="85" y2="15" stroke="#9C7A2E" stroke-width="0.5" opacity="0.5"/>
+        <text x="150" y="20" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="11" fill="#9C7A2E" letter-spacing="2" opacity="0.8">✦ بِسْمِ اللَّهِ ✦</text>
+        <line x1="215" y1="15" x2="300" y2="15" stroke="#9C7A2E" stroke-width="0.5" opacity="0.5"/>
+      </svg>
     </div>
-    <div class="gift-card sr">
-      <div class="gift-in">
-        <p class="gift-bank-nm">Bank Rakyat Indonesia (BRI)</p>
-        <div class="gift-acc">
-          <span class="gift-acc-num" id="accNum">1234 5678 9012 3456</span>
-          <button class="copy-btn" id="copyBtn">Salin</button>
+
+
+    <!-- ——————————————————————————————————————
+         SECTION: HOME — Couple Names
+    —————————————————————————————————————— -->
+    <section id="home" class="section section--home reveal-section" aria-label="Couple introduction">
+      <div class="section__inner">
+
+        <!-- SVG decorative botanical top -->
+        <div class="decoration decoration--botanical-top" aria-hidden="true">
+          <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150,55 Q130,40 100,35 Q80,30 60,38 Q40,45 30,38" fill="none" stroke="#9C7A2E" stroke-width="0.7" stroke-linecap="round"/>
+            <path d="M150,55 Q170,40 200,35 Q220,30 240,38 Q260,45 270,38" fill="none" stroke="#9C7A2E" stroke-width="0.7" stroke-linecap="round"/>
+            <path d="M150,55 Q150,30 150,10" fill="none" stroke="#9C7A2E" stroke-width="0.5" stroke-linecap="round"/>
+            <ellipse cx="90" cy="30" rx="10" ry="6" fill="none" stroke="#9C7A2E" stroke-width="0.5" transform="rotate(-20,90,30)"/>
+            <ellipse cx="210" cy="30" rx="10" ry="6" fill="none" stroke="#9C7A2E" stroke-width="0.5" transform="rotate(20,210,30)"/>
+            <ellipse cx="50" cy="35" rx="7" ry="4" fill="none" stroke="#9C7A2E" stroke-width="0.5" transform="rotate(-35,50,35)"/>
+            <ellipse cx="250" cy="35" rx="7" ry="4" fill="none" stroke="#9C7A2E" stroke-width="0.5" transform="rotate(35,250,35)"/>
+            <circle cx="150" cy="8" r="3" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+          </svg>
         </div>
-        <p class="gift-holder">a.n. Habib Aqil / Humaira</p>
-        <div class="orn" style="margin:1rem 0"><span class="orn-line"></span><span class="orn-gem">◆</span><span class="orn-line"></span></div>
-        <p class="gift-note">atau sampaikan langsung di lokasi acara</p>
+
+        <p class="home__label">Pernikahan</p>
+        <h2 class="home__couple">
+          <span class="home__name home__name--him">Habib Aqil Assegaf</span>
+          <span class="home__ampersand">&amp;</span>
+          <span class="home__name home__name--her">Humaira</span>
+        </h2>
+        <p class="home__location-label">Sigli, Aceh · MMXXVI</p>
+
+        <div class="home__ornament" aria-hidden="true">
+          <svg viewBox="0 0 260 20" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="10" x2="90" y2="10" stroke="#9C7A2E" stroke-width="0.5"/>
+            <circle cx="100" cy="10" r="3" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+            <circle cx="130" cy="10" r="5" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+            <circle cx="160" cy="10" r="3" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+            <line x1="170" y1="10" x2="260" y2="10" stroke="#9C7A2E" stroke-width="0.5"/>
+          </svg>
+        </div>
+
+        <p class="home__verse">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu<br/>istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."<br/><em style="font-size:0.8em;letter-spacing:0.1em;">— QS. Ar-Rum: 21 —</em></p>
+
+        <!-- SVG decorative botanical bottom -->
+        <div class="decoration decoration--botanical-bottom" aria-hidden="true">
+          <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150,5 Q130,20 100,25 Q80,30 60,22 Q40,15 30,22" fill="none" stroke="#9C7A2E" stroke-width="0.7" stroke-linecap="round"/>
+            <path d="M150,5 Q170,20 200,25 Q220,30 240,22 Q260,15 270,22" fill="none" stroke="#9C7A2E" stroke-width="0.7" stroke-linecap="round"/>
+            <path d="M150,5 Q150,30 150,50" fill="none" stroke="#9C7A2E" stroke-width="0.5" stroke-linecap="round"/>
+            <ellipse cx="90" cy="30" rx="10" ry="6" fill="none" stroke="#9C7A2E" stroke-width="0.5" transform="rotate(20,90,30)"/>
+            <ellipse cx="210" cy="30" rx="10" ry="6" fill="none" stroke="#9C7A2E" stroke-width="0.5" transform="rotate(-20,210,30)"/>
+          </svg>
+        </div>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CLOSING -->
-  <section class="sec-close">
-    <canvas id="closeBg"></canvas>
-    <div class="close-in sr">
-      <div class="close-orn">✦ ✦ ✦</div>
-      <h2 class="close-init">A & H</h2>
-      <p class="close-quote">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</p>
-      <p class="close-ref">— QS. Ar-Rum : 21</p>
-      <div class="close-div"><span></span><span>◆</span><span></span></div>
-      <p class="close-msg">Kami dengan tulus mengharapkan kehadiran Anda.</p>
-      <p class="close-date">06 · 06 · 2026</p>
-    </div>
-  </section>
-  <footer><p>With love, Habib & Humaira · 2026</p></footer>
-</main>
-<audio id="bgAudio" loop></audio>
 
-<script src="script.js"></script>
+    <!-- ——————————————————————————————————————
+         SECTION: REVEAL THE DATE
+    —————————————————————————————————————— -->
+    <section id="reveal-date" class="section section--reveal reveal-section" aria-label="Scratch to reveal the date">
+      <div class="section__inner">
+
+        <div class="section__header">
+          <span class="section__eyebrow">— Gosok untuk —</span>
+          <h2 class="section__title">Ungkap Tanggalnya</h2>
+          <p class="section__subtitle">Gosok dengan jari untuk mengungkap<br/>tanggal hari istimewa kami</p>
+        </div>
+
+        <!-- Confetti canvas for this section only -->
+        <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+        <!-- Three scratch circles -->
+        <div class="scratch-grid" role="group" aria-label="Date scratch cards">
+
+          <div class="scratch-item">
+            <div class="scratch-wrapper">
+              <div class="scratch-date-text" aria-label="Tanggal: 06">06</div>
+              <canvas class="scratch-canvas" id="scratch-day"
+                data-value="06" data-label="Tanggal"
+                width="160" height="160"
+                role="img" aria-label="Gosok untuk membuka tanggal">
+              </canvas>
+            </div>
+            <p class="scratch-label">Tanggal</p>
+          </div>
+
+          <div class="scratch-item">
+            <div class="scratch-wrapper">
+              <div class="scratch-date-text" aria-label="Bulan: Juni">Juni</div>
+              <canvas class="scratch-canvas" id="scratch-month"
+                data-value="Juni" data-label="Bulan"
+                width="160" height="160"
+                role="img" aria-label="Gosok untuk membuka bulan">
+              </canvas>
+            </div>
+            <p class="scratch-label">Bulan</p>
+          </div>
+
+          <div class="scratch-item">
+            <div class="scratch-wrapper">
+              <div class="scratch-date-text" aria-label="Tahun: 2026">2026</div>
+              <canvas class="scratch-canvas" id="scratch-year"
+                data-value="2026" data-label="Tahun"
+                width="160" height="160"
+                role="img" aria-label="Gosok untuk membuka tahun">
+              </canvas>
+            </div>
+            <p class="scratch-label">Tahun</p>
+          </div>
+
+        </div>
+
+        <p class="scratch-hint" id="scratch-hint" aria-live="polite">
+          <span class="scratch-hint__icon" aria-hidden="true">✦</span>
+          Gosok setiap lingkaran untuk mengungkap tanggal kami
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- ——————————————————————————————————————
+         SECTION: COUNTDOWN TIMER
+    —————————————————————————————————————— -->
+    <section id="countdown" class="section section--countdown reveal-section" aria-label="Wedding countdown timer">
+      <div class="section__inner">
+
+        <div class="section__header">
+          <span class="section__eyebrow">— Hitung Mundur —</span>
+          <h2 class="section__title">Menuju Hari Bahagia</h2>
+        </div>
+
+        <div class="countdown-grid" role="timer" aria-live="polite" aria-label="Countdown to wedding day">
+          <div class="countdown-item">
+            <span class="countdown-num" id="count-days">00</span>
+            <span class="countdown-lbl">Hari</span>
+          </div>
+          <div class="countdown-sep" aria-hidden="true">:</div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="count-hours">00</span>
+            <span class="countdown-lbl">Jam</span>
+          </div>
+          <div class="countdown-sep" aria-hidden="true">:</div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="count-minutes">00</span>
+            <span class="countdown-lbl">Menit</span>
+          </div>
+          <div class="countdown-sep" aria-hidden="true">:</div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="count-seconds">00</span>
+            <span class="countdown-lbl">Detik</span>
+          </div>
+        </div>
+
+        <div class="countdown-ornament" aria-hidden="true">
+          <svg viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="8" x2="70" y2="8" stroke="#9C7A2E" stroke-width="0.5"/>
+            <text x="100" y="12" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" fill="#9C7A2E">VI · VI · MMXXVI</text>
+            <line x1="130" y1="8" x2="200" y2="8" stroke="#9C7A2E" stroke-width="0.5"/>
+          </svg>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ——————————————————————————————————————
+         SECTION: VENUE
+    —————————————————————————————————————— -->
+    <section id="venue" class="section section--venue reveal-section" aria-label="Wedding venue information">
+      <div class="section__inner">
+
+        <div class="section__header">
+          <span class="section__eyebrow">— Akad Nikah & Resepsi —</span>
+          <h2 class="section__title">Lokasi</h2>
+        </div>
+
+        <!-- SVG illustrated Tuscany Villa -->
+        <div class="venue-illustration" aria-label="Illustration of Villa Toscana" role="img">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" class="villa-svg">
+            <!-- Sky / ground line -->
+            <line x1="0" y1="175" x2="360" y2="175" stroke="#9C7A2E" stroke-width="0.4" opacity="0.4"/>
+
+            <!-- Main villa building -->
+            <rect x="100" y="95" width="160" height="80" fill="none" stroke="#6B1A2A" stroke-width="0.8"/>
+            <!-- Roof -->
+            <polygon points="90,95 180,55 270,95" fill="none" stroke="#6B1A2A" stroke-width="0.8"/>
+            <!-- Roof tiles hint -->
+            <path d="M100,90 Q120,82 140,88 Q160,82 180,78 Q200,82 220,88 Q240,82 260,88" fill="none" stroke="#6B1A2A" stroke-width="0.4" opacity="0.5"/>
+            <!-- Chimney -->
+            <rect x="200" y="58" width="14" height="28" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <!-- Chimney cap -->
+            <rect x="197" y="56" width="20" height="5" fill="none" stroke="#6B1A2A" stroke-width="0.5"/>
+            <!-- Smoke curl -->
+            <path d="M207,56 Q212,48 205,40 Q198,32 207,25" fill="none" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4" stroke-linecap="round"/>
+
+            <!-- Front door (arched) -->
+            <rect x="163" y="135" width="34" height="40" fill="none" stroke="#6B1A2A" stroke-width="0.7"/>
+            <path d="M163,135 Q180,120 197,135" fill="none" stroke="#6B1A2A" stroke-width="0.7"/>
+            <!-- Door detail -->
+            <line x1="180" y1="135" x2="180" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.5"/>
+            <circle cx="186" cy="157" r="2" fill="none" stroke="#6B1A2A" stroke-width="0.5"/>
+
+            <!-- Left windows -->
+            <rect x="115" y="110" width="28" height="22" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <line x1="129" y1="110" x2="129" y2="132" stroke="#6B1A2A" stroke-width="0.3" opacity="0.5"/>
+            <line x1="115" y1="121" x2="143" y2="121" stroke="#6B1A2A" stroke-width="0.3" opacity="0.5"/>
+            <!-- Left window arch -->
+            <path d="M115,110 Q129,103 143,110" fill="none" stroke="#6B1A2A" stroke-width="0.5"/>
+
+            <!-- Right windows -->
+            <rect x="217" y="110" width="28" height="22" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <line x1="231" y1="110" x2="231" y2="132" stroke="#6B1A2A" stroke-width="0.3" opacity="0.5"/>
+            <line x1="217" y1="121" x2="245" y2="121" stroke="#6B1A2A" stroke-width="0.3" opacity="0.5"/>
+            <!-- Right window arch -->
+            <path d="M217,110 Q231,103 245,110" fill="none" stroke="#6B1A2A" stroke-width="0.5"/>
+
+            <!-- Left wing / colonnade -->
+            <rect x="40" y="120" width="60" height="55" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <line x1="55" y1="120" x2="55" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+            <line x1="70" y1="120" x2="70" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+            <line x1="85" y1="120" x2="85" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+
+            <!-- Right wing / colonnade -->
+            <rect x="260" y="120" width="60" height="55" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <line x1="275" y1="120" x2="275" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+            <line x1="290" y1="120" x2="290" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+            <line x1="305" y1="120" x2="305" y2="175" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+
+            <!-- Cypress trees left -->
+            <ellipse cx="20" cy="140" rx="7" ry="28" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <line x1="20" y1="168" x2="20" y2="175" stroke="#6B1A2A" stroke-width="0.8"/>
+            <ellipse cx="35" cy="145" rx="6" ry="22" fill="none" stroke="#6B1A2A" stroke-width="0.5" opacity="0.6"/>
+            <line x1="35" y1="167" x2="35" y2="175" stroke="#6B1A2A" stroke-width="0.6" opacity="0.6"/>
+
+            <!-- Cypress trees right -->
+            <ellipse cx="340" cy="140" rx="7" ry="28" fill="none" stroke="#6B1A2A" stroke-width="0.6"/>
+            <line x1="340" y1="168" x2="340" y2="175" stroke="#6B1A2A" stroke-width="0.8"/>
+            <ellipse cx="325" cy="145" rx="6" ry="22" fill="none" stroke="#6B1A2A" stroke-width="0.5" opacity="0.6"/>
+            <line x1="325" y1="167" x2="325" y2="175" stroke="#6B1A2A" stroke-width="0.6" opacity="0.6"/>
+
+            <!-- Path / driveway -->
+            <path d="M165,175 Q175,200 130,220" fill="none" stroke="#6B1A2A" stroke-width="0.5" opacity="0.4"/>
+            <path d="M195,175 Q185,200 230,220" fill="none" stroke="#6B1A2A" stroke-width="0.5" opacity="0.4"/>
+
+            <!-- Rose bushes bottom -->
+            <circle cx="130" cy="175" r="6" fill="none" stroke="#6B1A2A" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="140" cy="172" r="4" fill="none" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+            <circle cx="220" cy="175" r="6" fill="none" stroke="#6B1A2A" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="210" cy="172" r="4" fill="none" stroke="#6B1A2A" stroke-width="0.4" opacity="0.4"/>
+
+            <!-- Stars / sky dots -->
+            <circle cx="50" cy="20" r="1" fill="#9C7A2E" opacity="0.4"/>
+            <circle cx="80" cy="35" r="0.8" fill="#9C7A2E" opacity="0.3"/>
+            <circle cx="280" cy="15" r="1" fill="#9C7A2E" opacity="0.4"/>
+            <circle cx="310" cy="40" r="0.8" fill="#9C7A2E" opacity="0.3"/>
+            <circle cx="180" cy="10" r="1.2" fill="#9C7A2E" opacity="0.5"/>
+
+            <!-- Moon -->
+            <path d="M155,20 Q148,28 155,36 Q144,30 145,26 Q145,22 155,20Z" fill="none" stroke="#9C7A2E" stroke-width="0.6" opacity="0.5"/>
+          </svg>
+        </div>
+
+        <!-- Venue details -->
+        <div class="venue-details venue-details--two">
+          <div class="venue-card">
+            <span class="venue-card__badge">Akad Nikah</span>
+            <h3 class="venue-card__name">Mesjid Blang Malu</h3>
+            <p class="venue-card__address">Sigli, Aceh</p>
+            <div class="venue-card__divider" aria-hidden="true">— ✦ —</div>
+            <div class="venue-times">
+              <div class="venue-time-item">
+                <span class="venue-time-label">Tanggal</span>
+                <span class="venue-time-value">Sabtu, 06 Juni 2026</span>
+              </div>
+              <div class="venue-time-sep" aria-hidden="true"></div>
+              <div class="venue-time-item">
+                <span class="venue-time-label">Waktu</span>
+                <span class="venue-time-value">08.00 WIB</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="venue-card">
+            <span class="venue-card__badge">Resepsi Pernikahan</span>
+            <h3 class="venue-card__name">Jalan Sigli Jabal Ghafur Garot</h3>
+            <p class="venue-card__address">Sigli, Aceh</p>
+            <div class="venue-card__divider" aria-hidden="true">— ✦ —</div>
+            <div class="venue-times">
+              <div class="venue-time-item">
+                <span class="venue-time-label">Tanggal</span>
+                <span class="venue-time-value">Ahad, 07 Juni 2026</span>
+              </div>
+              <div class="venue-time-sep" aria-hidden="true"></div>
+              <div class="venue-time-item">
+                <span class="venue-time-label">Waktu</span>
+                <span class="venue-time-value">10.00 WIB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ——————————————————————————————————————
+         SECTION: DOA & HARAPAN (pengganti menu)
+    —————————————————————————————————————— -->
+    <section id="doa" class="section section--doa reveal-section" aria-label="Doa dan harapan">
+      <div class="section__inner">
+
+        <div class="section__header">
+          <span class="section__eyebrow">— Bismillahirrahmanirrahim —</span>
+          <h2 class="section__title">Undangan Kehadiran</h2>
+          <p class="section__subtitle">Dengan memohon Ridho Allah SWT<br/>kami mengundang kehadiran Bapak/Ibu/Saudara/i</p>
+        </div>
+
+        <!-- Ornate Islamic border card -->
+        <div class="doa-card">
+          <div class="doa-card__border" aria-hidden="true">
+            <svg class="border-corner border-corner--tl" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2,38 L2,2 L38,2" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+              <path d="M8,32 L8,8 L32,8" fill="none" stroke="#9C7A2E" stroke-width="0.4" opacity="0.5"/>
+              <circle cx="2" cy="2" r="2" fill="#9C7A2E" opacity="0.6"/>
+            </svg>
+            <svg class="border-corner border-corner--tr" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M38,38 L38,2 L2,2" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+              <path d="M32,32 L32,8 L8,8" fill="none" stroke="#9C7A2E" stroke-width="0.4" opacity="0.5"/>
+              <circle cx="38" cy="2" r="2" fill="#9C7A2E" opacity="0.6"/>
+            </svg>
+            <svg class="border-corner border-corner--bl" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2,2 L2,38 L38,38" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+              <path d="M8,8 L8,32 L32,32" fill="none" stroke="#9C7A2E" stroke-width="0.4" opacity="0.5"/>
+              <circle cx="2" cy="38" r="2" fill="#9C7A2E" opacity="0.6"/>
+            </svg>
+            <svg class="border-corner border-corner--br" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M38,2 L38,38 L2,38" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+              <path d="M32,8 L32,32 L8,32" fill="none" stroke="#9C7A2E" stroke-width="0.4" opacity="0.5"/>
+              <circle cx="38" cy="38" r="2" fill="#9C7A2E" opacity="0.6"/>
+            </svg>
+          </div>
+
+          <div class="doa-card__content">
+
+            <!-- Monogram A & H -->
+            <div class="doa-monogram" aria-hidden="true">
+              <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="#9C7A2E" stroke-width="0.6" opacity="0.5"/>
+                <circle cx="60" cy="60" r="44" fill="none" stroke="#9C7A2E" stroke-width="0.3" opacity="0.35"/>
+                <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Cormorant Garamond, serif" font-size="38" fill="#9C7A2E" font-style="italic" letter-spacing="3">A&amp;H</text>
+                <text x="50%" y="72%" text-anchor="middle" dominant-baseline="middle" font-family="Cormorant Garamond, serif" font-size="7" fill="#9C7A2E" letter-spacing="3">✦ ✦ ✦</text>
+              </svg>
+            </div>
+
+            <div class="doa-names">
+              <p class="doa-nama-pasangan"><strong>Habib Aqil Assegaf</strong></p>
+              <p class="doa-nama-label">Putra dari</p>
+              <p class="doa-nama-ortu">Said Alwi Assegaf &amp; Siti Hasanah</p>
+            </div>
+            
+            <div class="doa-separator" aria-hidden="true">
+              <svg viewBox="0 0 200 24" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="12" x2="70" y2="12" stroke="#9C7A2E" stroke-width="0.5" opacity="0.6"/>
+                <path d="M85,12 Q90,6 95,12 Q100,18 105,12 Q110,6 115,12" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+                <line x1="130" y1="12" x2="200" y2="12" stroke="#9C7A2E" stroke-width="0.5" opacity="0.6"/>
+              </svg>
+            </div>
+            
+            <div class="doa-names">
+              <p class="doa-nama-pasangan"><strong>Humaira</strong></p>
+              <p class="doa-nama-label">Putri dari</p>
+              <p class="doa-nama-ortu">Bachktiar &amp; Laila</p>
+            </div>
+            
+            <div class="doa-separator" aria-hidden="true">
+              <svg viewBox="0 0 200 12" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="6" x2="80" y2="6" stroke="#9C7A2E" stroke-width="0.5"/>
+                <polygon points="90,6 95,2 100,6 95,10" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+                <line x1="110" y1="6" x2="200" y2="6" stroke="#9C7A2E" stroke-width="0.5"/>
+              </svg>
+            </div>
+
+            <p class="doa-harapan">
+              Merupakan suatu kehormatan dan kebahagiaan bagi kami<br/>
+              apabila Bapak/Ibu/Saudara/i berkenan hadir<br/>
+              untuk memberikan doa restu kepada kedua mempelai.
+            </p>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+
+
+
+    <!-- ——————————————————————————————————————
+         SECTION: GIFTS
+    —————————————————————————————————————— -->
+    <section id="gifts" class="section section--gifts reveal-section" aria-label="Informasi hadiah pernikahan">
+      <div class="section__inner">
+
+        <div class="section__header">
+          <span class="section__eyebrow">— Amplop Digital —</span>
+          <h2 class="section__title">Kirim Hadiah</h2>
+          <p class="section__subtitle">Kehadiran Bapak/Ibu/Saudara/i adalah hadiah terbesar bagi kami.<br/>Namun jika ingin memberikan tanda kasih:</p>
+        </div>
+
+        <!-- Bank details card -->
+        <div class="gift-card">
+          <div class="gift-card__envelope" aria-hidden="true">
+            <svg viewBox="0 0 60 42" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="58" height="40" rx="2" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+              <path d="M1,1 L30,24 L59,1" fill="none" stroke="#9C7A2E" stroke-width="0.8"/>
+              <path d="M1,41 L22,22" fill="none" stroke="#9C7A2E" stroke-width="0.5" opacity="0.5"/>
+              <path d="M59,41 L38,22" fill="none" stroke="#9C7A2E" stroke-width="0.5" opacity="0.5"/>
+              <circle cx="30" cy="24" r="3" fill="none" stroke="#9C7A2E" stroke-width="0.5"/>
+            </svg>
+          </div>
+
+          <h3 class="gift-card__title">Transfer Bank</h3>
+          <div class="gift-card__details" role="group" aria-label="Detail rekening">
+            <div class="gift-field">
+              <span class="gift-field__label">Nama</span>
+              <span class="gift-field__value">Habib Aqil Assegaf</span>
+            </div>
+            <div class="gift-field">
+              <span class="gift-field__label">Bank</span>
+              <span class="gift-field__value">Bank Syariah Indonesia (BSI)</span>
+            </div>
+            <div class="gift-field">
+              <span class="gift-field__label">No. Rekening</span>
+              <span class="gift-field__value">7168849782</span>
+            </div>
+            <div class="gift-field">
+              <span class="gift-field__label">Berita</span>
+              <span class="gift-field__value">Hadiah Pernikahan A&amp;H</span>
+            </div>
+          </div>
+
+          <p class="gift-card__note">
+            Konfirmasi transfer dapat dikirim melalui WhatsApp kepada kami.<br/>
+            Jazakallahu khairan atas doa dan perhatian Anda.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ——————————————————————————————————————
+         SECTION: RSVP FOOTER
+    —————————————————————————————————————— -->
+    <section id="rsvp" class="section section--rsvp reveal-section" aria-label="RSVP and footer">
+      <div class="section__inner">
+
+        <div class="rsvp-content">
+          <!-- Top monogram -->
+          <div class="rsvp-monogram" aria-hidden="true">
+            <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="36" fill="none" stroke="#9C7A2E" stroke-width="0.6"/>
+              <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Cormorant Garamond, serif" font-size="24" fill="#9C7A2E" font-style="italic">A&amp;H</text>
+            </svg>
+          </div>
+
+          <h2 class="rsvp-title">Konfirmasi Kehadiran<br/>sebelum 25 Mei 2026</h2>
+          <p class="rsvp-subtitle">Mohon konfirmasi kehadiran Anda agar kami dapat mempersiapkan dengan baik</p>
+
+          <a href="https://wa.me/+61 434 518 935" class="btn-rsvp" aria-label="Konfirmasi kehadiran via WhatsApp">
+            Konfirmasi Kehadiran · WhatsApp
+          </a>
+
+          <div class="rsvp-ornament" aria-hidden="true">
+            <svg viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="8" x2="70" y2="8" stroke="#9C7A2E" stroke-width="0.4"/>
+              <circle cx="78" cy="8" r="2" fill="none" stroke="#9C7A2E" stroke-width="0.4"/>
+              <circle cx="100" cy="8" r="4" fill="none" stroke="#9C7A2E" stroke-width="0.4"/>
+              <circle cx="122" cy="8" r="2" fill="none" stroke="#9C7A2E" stroke-width="0.4"/>
+              <line x1="130" y1="8" x2="200" y2="8" stroke="#9C7A2E" stroke-width="0.4"/>
+            </svg>
+          </div>
+
+          <p class="rsvp-footer-text">Habib Aqil Assegaf &amp; Humaira<br/>
+            <span class="rsvp-footer-date">06 · VI · MMXXVI</span>
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+
+  <!-- ============================================================
+       FLOATING MUSIC BUTTON
+  ============================================================ -->
+  <button class="music-btn" id="music-btn" aria-label="Putar/hentikan musik" aria-pressed="false">
+    <span class="music-btn__icon music-btn__icon--play" aria-hidden="true">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 4L9 20 20 12Z" fill="currentColor"/>
+        <path d="M5 3 Q7 7 7 12 Q7 17 5 21" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+    </span>
+    <span class="music-btn__icon music-btn__icon--pause" aria-hidden="true" style="display:none">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+        <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="music-btn__waves" aria-hidden="true">
+      <span class="wave"></span>
+      <span class="wave"></span>
+      <span class="wave"></span>
+    </span>
+  </button>
+
+  <script src="script.js"></script>
 </body>
 </html>

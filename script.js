@@ -1,555 +1,770 @@
-/* ════════════════════════════════════════════
-   BAMBOO DRAWING UTILITIES
-════════════════════════════════════════════ */
-function drawBambooScene(ctx, W, H, opts){
-    opts = opts || {};
-    const density   = opts.density   || 1;
-    const moonY     = opts.moonY     !== undefined ? opts.moonY : H * .3;
-    const moonR     = opts.moonR     !== undefined ? opts.moonR : Math.min(W,H)*.06;
-    const hasMoon   = opts.moon      !== false;
-    const hasMist   = opts.mist      !== false;
-    const stalksArr = opts.stalks    || null;
-  
-    // Background
-    ctx.fillStyle = opts.bg || '#0A0C06';
-    ctx.fillRect(0,0,W,H);
-  
-    // Moon glow
-    if(hasMoon){
-      const mg = ctx.createRadialGradient(W/2, moonY, 0, W/2, moonY, moonR*5);
-      mg.addColorStop(0,'rgba(184,132,30,.07)');
-      mg.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=mg; ctx.fillRect(0,0,W,H);
-      // Moon disc
-      ctx.save();
-      ctx.beginPath(); ctx.arc(W/2,moonY,moonR,0,Math.PI*2);
-      const md=ctx.createRadialGradient(W/2-moonR*.2,moonY-moonR*.2,0,W/2,moonY,moonR);
-      md.addColorStop(0,'rgba(230,210,170,.16)');
-      md.addColorStop(.6,'rgba(200,170,100,.06)');
-      md.addColorStop(1,'rgba(170,130,60,.02)');
-      ctx.fillStyle=md; ctx.fill();
-      ctx.restore();
-    }
-  
-    // Mountain silhouette
-    if(opts.mountains !== false){
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(0,H);
-      ctx.lineTo(0, H*.7);
-      ctx.quadraticCurveTo(W*.1,H*.52,W*.2,H*.63);
-      ctx.quadraticCurveTo(W*.3,H*.46,W*.4,H*.58);
-      ctx.quadraticCurveTo(W*.5,H*.40,W*.5,H*.42);
-      ctx.quadraticCurveTo(W*.6,H*.58,W*.7,H*.46);
-      ctx.quadraticCurveTo(W*.8,H*.63,W*.9,H*.52);
-      ctx.lineTo(W,H*.7); ctx.lineTo(W,H);
-      ctx.closePath();
-      ctx.fillStyle='rgba(5,8,3,.88)'; ctx.fill();
-      ctx.restore();
-    }
-  
-    // Mist band
-    if(hasMist){
-      const mist=ctx.createLinearGradient(0,H*.5,0,H*.72);
-      mist.addColorStop(0,'rgba(10,12,6,0)');
-      mist.addColorStop(.5,'rgba(12,16,8,.45)');
-      mist.addColorStop(1,'rgba(10,12,6,0)');
-      ctx.fillStyle=mist; ctx.fillRect(0,H*.5,W,H*.25);
-    }
-  
-    // Draw bamboo stalks
-    const defaultStalks = [];
-    const cols = Math.ceil(W / (28*density));
-    for(let i=0;i<cols;i++){
-      const xPct = (i+.5)/cols;
-      const side = xPct < .5 ? 'L':'R';
-      const edge = xPct < .5 ? xPct*2 : (1-xPct)*2;
-      if(edge > .35 && !opts.fullCover) continue; // only draw near edges unless fullCover
-      defaultStalks.push({x:W*xPct, tilt:(Math.random()-.5)*.018, scale:.5+edge*.5+Math.random()*.2, side});
-    }
-    const stalks = stalksArr || defaultStalks;
-    stalks.forEach(s=>{
-      const sw  = (10+Math.random()*5)*s.scale;
-      const bot = H + 10;
-      const h   = (H*.7+Math.random()*H*.18)*s.scale;
-      const top = bot - h;
-      const tipX= s.x + s.tilt*h;
-  
-      // Stalk body gradient
-      const sg = ctx.createLinearGradient(s.x-sw/2,0,s.x+sw/2,0);
-      sg.addColorStop(0,  `rgba(18,30,10,${.92*s.scale})`);
-      sg.addColorStop(.3, `rgba(42,68,20,${.96*s.scale})`);
-      sg.addColorStop(.55,`rgba(58,90,26,${s.scale})`);
-      sg.addColorStop(.75,`rgba(42,68,20,${.96*s.scale})`);
-      sg.addColorStop(1,  `rgba(14,24,8,${.92*s.scale})`);
-      ctx.fillStyle=sg;
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(s.x-sw/2+tipX-s.x, top);
-      ctx.quadraticCurveTo(s.x-sw/2+s.tilt*h*.4,bot-h*.5,s.x-sw/2,bot);
-      ctx.lineTo(s.x+sw/2,bot);
-      ctx.quadraticCurveTo(s.x+sw/2+s.tilt*h*.4,bot-h*.5,s.x+sw/2+tipX-s.x,top);
-      ctx.closePath(); ctx.fill();
-      // Highlight stripe
-      ctx.globalAlpha=.1*s.scale;
-      ctx.strokeStyle='#A8D060'; ctx.lineWidth=1.2;
-      ctx.beginPath();
-      ctx.moveTo(s.x+1+tipX-s.x,top);
-      ctx.quadraticCurveTo(s.x+1+s.tilt*h*.4,bot-h*.5,s.x+1,bot);
-      ctx.stroke();
-      ctx.globalAlpha=1;
-      ctx.restore();
-  
-      // Nodes
-      const ns = 52+Math.random()*20;
-      const no = Math.random()*ns;
-      for(let ny=bot-no; ny>top; ny-=ns){
-        const nx=s.x+s.tilt*(bot-ny);
-        // Node ring
-        const rg=ctx.createLinearGradient(nx-sw*.6,ny-3,nx+sw*.6,ny+3);
-        rg.addColorStop(0,'rgba(12,20,6,.9)');
-        rg.addColorStop(.45,'rgba(40,65,18,.95)');
-        rg.addColorStop(.55,'rgba(30,50,14,.95)');
-        rg.addColorStop(1,'rgba(12,20,6,.9)');
-        ctx.fillStyle=rg;
-        ctx.beginPath(); ctx.ellipse(nx,ny,sw*.6,3.2,0,0,Math.PI*2); ctx.fill();
-        // Node highlight
-        ctx.fillStyle='rgba(100,180,50,.1)';
-        ctx.beginPath(); ctx.ellipse(nx,ny-1,sw*.35,1.4,0,0,Math.PI*2); ctx.fill();
-  
-        // Leaves
-        if(Math.random()>.48){
-          for(let li=0;li<2;li++){
-            const ls=li===0?1:-1;
-            const ang=(ls*32+(Math.random()-.5)*22)*Math.PI/180;
-            const ll=26+Math.random()*18;
-            const lw=4.5+Math.random()*3.5;
-            ctx.save();
-            ctx.translate(nx,ny);
-            // Alternate left/right based on node position
-            const baseAng = (s.side==='L') ? 0 : Math.PI;
-            ctx.rotate(ang+baseAng);
-            const lg=ctx.createLinearGradient(0,0,ll,0);
-            lg.addColorStop(0,`rgba(38,70,18,${.88*s.scale})`);
-            lg.addColorStop(.4,`rgba(60,100,26,${.92*s.scale})`);
-            lg.addColorStop(1,`rgba(28,55,12,${.38*s.scale})`);
-            ctx.fillStyle=lg;
-            ctx.beginPath();
-            ctx.moveTo(0,0);
-            ctx.quadraticCurveTo(ll*.4,-lw,ll,0);
-            ctx.quadraticCurveTo(ll*.4,lw*.65,0,0);
-            ctx.fill();
-            // Vein
-            ctx.strokeStyle=`rgba(70,120,30,${.3*s.scale})`; ctx.lineWidth=.6;
-            ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(ll*.82,0); ctx.stroke();
-            ctx.restore();
-          }
-        }
+/**
+ * script.js — Luxury Wedding Invitation
+ * Alessandro & Valentina · June 14, 2025
+ *
+ * Modules:
+ *  1. CurtainIntro    — Theater curtain open animation
+ *  2. ScratchCards    — Canvas-based gold scratch effect
+ *  3. Confetti        — Particle system (burgundy + gold)
+ *  4. Countdown       — Live countdown timer
+ *  5. MusicPlayer     — Web Audio API ambient music
+ *  6. ScrollReveal    — IntersectionObserver fade-in
+ *  7. LangToggle      — EN/IT mock switcher
+ */
+
+'use strict';
+
+/* ============================================================
+   CONSTANTS
+============================================================ */
+const WEDDING_DATE = new Date('2026-06-06T08:00:00'); // 06 Juni 2026, 08:00 WIB
+const SCRATCH_THRESHOLD = 0.90;   // 90% cleared triggers confetti
+
+
+/* ============================================================
+   1. CURTAIN INTRO MODULE
+============================================================ */
+const CurtainIntro = (() => {
+
+  const curtainLeft  = document.getElementById('curtain-left');
+  const curtainRight = document.getElementById('curtain-right');
+  const btnOpen      = document.getElementById('btn-open-invitation');
+  const introCta     = document.getElementById('intro-cta');
+  const introReveal  = document.getElementById('intro-reveal');
+  const introScreen  = document.getElementById('intro-screen');
+  const mainContent  = document.getElementById('main-content');
+  const monogram     = introReveal.querySelector('.intro__monogram');
+
+  let opened = false;
+
+  /** Lock body scroll during intro */
+  function lockScroll() {
+    document.body.classList.add('no-scroll');
+  }
+
+  /** Unlock body scroll after curtains open */
+  function unlockScroll() {
+    document.body.classList.remove('no-scroll');
+  }
+
+  /** Open curtains on button click */
+  function openCurtains() {
+    if (opened) return;
+    opened = true;
+
+    // 1. Hide the CTA button
+    introCta.classList.add('is-hidden');
+
+    // Small delay before curtains start moving (cinematic beat)
+    setTimeout(() => {
+
+      // 2. Slide curtains open
+      curtainLeft.classList.add('is-open');
+      curtainRight.classList.add('is-open');
+
+      // 3. Start revealing content behind curtains
+      setTimeout(() => {
+        introReveal.classList.add('is-visible');
+        monogram.classList.add('animate');
+      }, 400);
+
+      // 4. After curtains fully open, show main content
+      setTimeout(() => {
+        unlockScroll();
+        revealMainContent();
+      }, 1600);
+
+    }, 200);
+  }
+
+  /** Fade intro screen out and show main content */
+  function revealMainContent() {
+    // Show the main content (hidden until now)
+    mainContent.style.display = 'block';
+
+    // Small extra delay, then fade in
+    setTimeout(() => {
+      mainContent.classList.add('is-visible');
+      ScrollReveal.init(); // Start observing sections
+    }, 200);
+
+    // Remove intro from layout after transition
+    setTimeout(() => {
+      introScreen.style.display = 'none';
+    }, 2400);
+  }
+
+  function init() {
+    lockScroll();
+    btnOpen.addEventListener('click', openCurtains);
+
+    // Keyboard support
+    btnOpen.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openCurtains();
       }
     });
-  
-    // Ground line
-    if(opts.ground !== false){
-      const gl=ctx.createLinearGradient(0,H*.85,0,H);
-      gl.addColorStop(0,'rgba(10,12,6,0)');
-      gl.addColorStop(1,'rgba(5,8,3,.6)');
-      ctx.fillStyle=gl; ctx.fillRect(0,H*.85,W,H*.15);
-    }
   }
-  
-  function drawCurtainPanel(cv, side){
-    cv.width=0; cv.height=0; // reset
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    const parent=cv.parentElement;
-    const W=parent.offsetWidth, H=parent.offsetHeight;
-    if(!W||!H) return;
-    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
-    cv.style.width=W+'px'; cv.style.height=H+'px';
-    const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
-  
-    // Full-cover bamboo stalks for curtain
-    const stalks=[];
-    const cols=Math.ceil(W/20);
-    for(let i=0;i<cols;i++){
-      stalks.push({
-        x:(i+.5)*W/cols,
-        tilt:(Math.random()-.5)*.012,
-        scale:.65+Math.random()*.5,
-        side:side
-      });
-    }
-    drawBambooScene(ctx,W,H,{
-      stalks, fullCover:true, moon:false, mountains:false, mist:false, ground:false,
-      bg: side==='L'
-        ? 'linear-gradient(to right,#0a0e06,#111808)'
-        : 'linear-gradient(to left,#0a0e06,#111808)'
-    });
-    // Fallback bg if gradient string won't work
-    ctx.globalCompositeOperation='destination-over';
-    const bg=ctx.createLinearGradient(side==='L'?0:W, 0, side==='L'?W:0, 0);
-    bg.addColorStop(0,'#0D1409'); bg.addColorStop(1,'#0A0E06');
-    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-    ctx.globalCompositeOperation='source-over';
-  
-    // Misty edge glow on inner seam
-    const eg=ctx.createLinearGradient(side==='L'?W-80:0, 0, side==='L'?W:80, 0);
-    eg.addColorStop(0,side==='L'?'rgba(0,0,0,0)':'rgba(0,0,0,.7)');
-    eg.addColorStop(1,side==='L'?'rgba(0,0,0,.7)':'rgba(0,0,0,0)');
-    ctx.fillStyle=eg; ctx.fillRect(0,0,W,H);
-  
-    // Gold trim line on inner edge
-    const tx=side==='L'?W-1:1;
-    const tg=ctx.createLinearGradient(0,0,0,H);
-    tg.addColorStop(0,'rgba(184,132,30,0)');
-    tg.addColorStop(.25,'rgba(184,132,30,.5)');
-    tg.addColorStop(.75,'rgba(184,132,30,.5)');
-    tg.addColorStop(1,'rgba(184,132,30,0)');
-    ctx.strokeStyle=tg; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.moveTo(tx,0); ctx.lineTo(tx,H); ctx.stroke();
-  }
-  
-  function drawBgCanvas(id, opts){
-    const cv=document.getElementById(id); if(!cv) return;
-    const parent=cv.parentElement||cv.closest('section');
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    const W=parent.offsetWidth, H=parent.offsetHeight;
-    if(!W||!H) return;
-    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
-    cv.style.width=W+'px'; cv.style.height=H+'px';
-    const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
-    drawBambooScene(ctx,W,H,opts);
-  }
-  
-  /* ════ INK WASH BG (intro) ════ */
-  (function(){
-    const cv=document.getElementById('bgInk'); if(!cv) return;
-    function draw(){
-      const dpr=Math.min(window.devicePixelRatio||1,2);
-      cv.width=Math.round(window.innerWidth*dpr);
-      cv.height=Math.round(window.innerHeight*dpr);
-      const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
-      const W=window.innerWidth, H=window.innerHeight;
-      drawBambooScene(ctx,W,H,{
-        moon:true, moonY:H*.28, mountains:true, mist:true, ground:true,
-        stalks:null, fullCover:false
-      });
-    }
-    draw();
-    window.addEventListener('resize',draw,{passive:true});
-  })();
-  
-  /* ════ CURTAINS ════ */
-  (function(){
-    function init(){
-      const cL=document.getElementById('cvL');
-      const cR=document.getElementById('cvR');
-      if(cL) drawCurtainPanel(cL,'L');
-      if(cR) drawCurtainPanel(cR,'R');
-    }
-    // Fire after a short delay so layout is stable
-    setTimeout(init, 50);
-    window.addEventListener('resize',()=>setTimeout(init,50),{passive:true});
-  })();
-  
-  /* ════ INTRO SEQUENCE ════ */
-  (function(){
-    const seal=document.getElementById('sealWrap');
-    const openW=document.getElementById('openWrap');
-    document.body.style.overflow='hidden';
-    setTimeout(()=>seal.classList.add('show'),350);
-    setTimeout(()=>openW.classList.add('show'),1500);
-  })();
-  
-  /* ════ OPEN BUTTON ════ */
-  (function(){
-    const btn=document.getElementById('openBtn');
-    const openW=document.getElementById('openWrap');
-    const seal=document.getElementById('sealWrap');
-    const curtL=document.getElementById('curtainL');
-    const curtR=document.getElementById('curtainR');
-    const rc=document.getElementById('revealContent');
-    const intro=document.getElementById('intro');
-    const main=document.getElementById('main');
-    const rcEls=['rcEye','rcInit','rcDiv','rcNames','rcDate'].map(id=>document.getElementById(id));
-  
-    btn.addEventListener('click',()=>{
-      openW.classList.add('vanish');
-      seal.classList.add('hide');
-  
-      setTimeout(()=>{
-        curtL.classList.add('open');
-        curtR.classList.add('open');
-      },180);
-  
-      setTimeout(()=>{
-        rcEls.forEach((el,i)=>setTimeout(()=>el&&el.classList.add('in'),i*180));
-      },700);
-  
-      setTimeout(()=>{
-        main.classList.remove('hidden');
-        document.body.style.overflow='auto';
-        // Draw all section bg canvases now that #main is visible
-        requestAnimationFrame(()=>{
-          drawBgCanvas('heroBg',{moon:true,moonY:0,mountains:false,mist:false,ground:false,fullCover:true,stalks:buildSideStalksFull('heroBg')});
-          drawBgCanvas('bambooBg1',{moon:false,mountains:false,mist:false,ground:false,fullCover:true});
-          drawBgCanvas('bambooBg2',{moon:false,mountains:false,mist:false,ground:false,fullCover:true});
-          drawBgCanvas('bambooBg3',{moon:true,moonY:null,mountains:false,mist:false,ground:false,fullCover:true});
-          drawBgCanvas('closeBg',{moon:true,mountains:false,mist:false,ground:false,fullCover:true});
-          // Now safe to init scratch cards
-          initAllScratch();
-        });
-      },2000);
-  
-      setTimeout(()=>{
-        intro.style.transition='opacity .7s';
-        intro.style.opacity='0';
-        intro.style.pointerEvents='none';
-      },2400);
-      setTimeout(()=>intro.style.display='none',3200);
-    });
-  
-    function buildSideStalksFull(id){
-      const cv=document.getElementById(id);
-      if(!cv) return null;
-      const parent=cv.parentElement;
-      const W=parent.offsetWidth||window.innerWidth;
-      const H=parent.offsetHeight||window.innerHeight;
-      const stalks=[];
-      const cols=Math.ceil(W/24);
-      for(let i=0;i<cols;i++){
-        const xPct=(i+.5)/cols;
-        const edgeDist=Math.min(xPct,1-xPct)*2;
-        if(edgeDist>.5) continue;
-        stalks.push({x:W*xPct,tilt:(Math.random()-.5)*.016,scale:.4+edgeDist*.9+Math.random()*.15,side:xPct<.5?'L':'R'});
-      }
-      return stalks;
-    }
-  })();
-  
-  /* ════ SCRATCH CARDS — FIXED ROOT CAUSE ════
-     Root cause: canvas has offsetWidth=0 when #main is display:none.
-     Solution: init is called AFTER #main becomes visible (from openBtn handler above).
-     The text is drawn to canvas FIRST (layer 0), then gold overlay ON TOP (layer 1).
-     Scratching erases layer 1 (destination-out), revealing layer 0 text underneath.
-  ════════════════════════════════════════════ */
-  function initAllScratch(){
-    const canvases=document.querySelectorAll('.s-canvas');
-    const revealMsg=document.getElementById('revealMsg');
-    const revealed=new Map();
-    canvases.forEach(cv=>revealed.set(cv.id,false));
-  
-    canvases.forEach(cv=>{
-      const val=cv.dataset.value;
-      // Now #main is visible, offsetWidth is real
-      const cssW=cv.offsetWidth||130;
-      const cssH=cv.offsetHeight||130;
-      if(!cssW||!cssH) return; // safety guard
-  
-      const dpr=Math.min(window.devicePixelRatio||1,2);
-      cv.width=Math.round(cssW*dpr);
-      cv.height=Math.round(cssH*dpr);
-      cv.style.width=cssW+'px';
-      cv.style.height=cssH+'px';
-  
-      const ctx=cv.getContext('2d');
-      ctx.scale(dpr,dpr);
-      const W=cssW, H=cssH, cx=W/2, cy=H/2;
-      const R=Math.min(W,H)/2-1;
-  
-      /* ── Step 1: draw dark background + reveal text FIRST ── */
-      ctx.save();
-      ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
-  
-      // dark bg matching bamboo theme
-      const bg=ctx.createRadialGradient(cx-R*.3,cy-R*.3,0,cx,cy,R);
-      bg.addColorStop(0,'#1C2614'); bg.addColorStop(1,'#0D1008');
-      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-  
-      // inner decorative ring
-      ctx.beginPath(); ctx.arc(cx,cy,R-8,0,Math.PI*2);
-      ctx.strokeStyle='rgba(184,132,30,.22)'; ctx.lineWidth=.7; ctx.stroke();
-  
-      // THE VALUE — revealed gold text
-      const fs=val.length>2?Math.round(W*.28):Math.round(W*.36);
-      ctx.font=`italic ${fs}px "Playfair Display",Georgia,serif`;
-      ctx.fillStyle='#D4A83A'; // gold on dark
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText(val,cx,cy);
-  
-      ctx.restore(); // end of clip
-  
-      /* ── Step 2: gold overlay ON TOP ── */
-      paintGoldOverlay(ctx,cx,cy,R,W,H);
-  
-      /* ── Step 3: interaction ── */
-      setupScratch(cv,ctx,W,H,cx,cy,R,revealed,revealMsg);
-    });
-  }
-  
-  function paintGoldOverlay(ctx,cx,cy,R,W,H){
+
+  return { init };
+
+})();
+
+
+/* ============================================================
+   2. SCRATCH CARDS MODULE
+============================================================ */
+const ScratchCards = (() => {
+
+  // Each canvas has a data-value for the hidden date part
+  const canvases = document.querySelectorAll('.scratch-canvas');
+  const hintEl   = document.getElementById('scratch-hint');
+
+  // Track completion percentage for each canvas
+  const completionState = { day: 0, month: 0, year: 0 };
+  const completionKeys  = ['day', 'month', 'year'];
+  let confettiTriggered = false;
+
+  /**
+   * Draw the metallic gold layer on a canvas
+   * Uses radial gradients to simulate metallic sheen
+   */
+  function drawGoldLayer(canvas) {
+    const ctx  = canvas.getContext('2d');
+    const size = canvas.width; // canvas is square (160x160 internal)
+
+    // 1. Base gold metallic gradient (radial from top-left for sheen)
+    const base = ctx.createRadialGradient(
+      size * 0.3, size * 0.25, 0,   // inner circle (highlight)
+      size * 0.5, size * 0.5, size * 0.75  // outer
+    );
+    base.addColorStop(0,    '#F0D070');  // bright highlight
+    base.addColorStop(0.15, '#D4A83A');  // gold
+    base.addColorStop(0.35, '#B8861E');  // mid gold
+    base.addColorStop(0.55, '#9C7A2E');  // deep gold
+    base.addColorStop(0.75, '#C4973A');  // mid tone
+    base.addColorStop(0.9,  '#8A6520');  // shadow
+    base.addColorStop(1,    '#705215');  // deep shadow
+
+    // Clip to circle
     ctx.save();
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
-  
-    const g=ctx.createRadialGradient(cx-R*.28,cy-R*.28,0,cx,cy,R);
-    g.addColorStop(0,'#EAC85A');
-    g.addColorStop(.2,'#C8951E');
-    g.addColorStop(.5,'#A87010');
-    g.addColorStop(.7,'#C4921C');
-    g.addColorStop(.88,'#DDB050');
-    g.addColorStop(1,'#8A6010');
-    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-  
-    // shine
-    const sh=ctx.createLinearGradient(0,0,W*.55,H*.55);
-    sh.addColorStop(0,'rgba(255,255,255,.26)');
-    sh.addColorStop(.4,'rgba(255,255,255,.06)');
-    sh.addColorStop(1,'rgba(255,255,255,0)');
-    ctx.fillStyle=sh; ctx.fillRect(0,0,W,H);
-  
-    // grain
-    for(let i=0;i<180;i++){
-      ctx.fillStyle=`rgba(255,220,80,${Math.random()*.055})`;
-      ctx.fillRect(Math.random()*W,Math.random()*H,1.5,1.5);
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+    ctx.clip();
+
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, size, size);
+
+    // 2. Overlay shine streak (top-left diagonal)
+    const shine = ctx.createLinearGradient(0, 0, size * 0.6, size * 0.4);
+    shine.addColorStop(0,    'rgba(255,255,200,0.45)');
+    shine.addColorStop(0.3,  'rgba(255,240,150,0.25)');
+    shine.addColorStop(0.6,  'rgba(255,230,100,0.08)');
+    shine.addColorStop(1,    'rgba(255,230,100,0)');
+
+    ctx.fillStyle = shine;
+    ctx.fillRect(0, 0, size, size);
+
+    // 3. Subtle texture noise (fine horizontal stripes simulate brushed metal)
+    ctx.globalAlpha = 0.06;
+    for (let y = 0; y < size; y += 2) {
+      ctx.fillStyle = y % 4 === 0
+        ? 'rgba(255,255,255,0.4)'
+        : 'rgba(0,0,0,0.3)';
+      ctx.fillRect(0, y, size, 1);
     }
-  
-    // edge vignette
-    const ev=ctx.createRadialGradient(cx,cy,R*.6,cx,cy,R);
-    ev.addColorStop(0,'rgba(0,0,0,0)'); ev.addColorStop(1,'rgba(0,0,0,.2)');
-    ctx.fillStyle=ev; ctx.fillRect(0,0,W,H);
-  
-    // hint text
-    ctx.font=`italic 11px "EB Garamond",Georgia,serif`;
-    ctx.fillStyle='rgba(60,35,0,.5)';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText('gosok',cx,cy+1);
-  
+    ctx.globalAlpha = 1;
+
+    // 4. Inner ring hint (coin-like edge)
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, size / 2 - 3, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,240,150,0.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // 5. Fingerprint hint text
+    ctx.fillStyle = 'rgba(120,80,10,0.55)';
+    ctx.font = `${size * 0.09}px Cormorant Garamond, serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Gosok di sini', size / 2, size / 2 - 8);
+
+    // Small icon
+    ctx.font = `${size * 0.12}px serif`;
+    ctx.fillText('✦', size / 2, size / 2 + 12);
+
     ctx.restore();
-  
-    // outer border (above clip, always visible)
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
-    ctx.strokeStyle='rgba(120,82,10,.6)'; ctx.lineWidth=2; ctx.stroke();
   }
-  
-  function setupScratch(cv,ctx,W,H,cx,cy,R,revealed,revealMsg){
-    let drag=false, lx=0, ly=0;
-  
-    function pos(e){
-      const r=cv.getBoundingClientRect();
-      const src=e.touches?e.touches[0]:e;
-      return{x:(src.clientX-r.left)*(W/r.width), y:(src.clientY-r.top)*(H/r.height)};
+
+  /**
+   * Calculate percentage of canvas pixels that have been cleared
+   */
+  function getScratchPercent(canvas) {
+    const ctx       = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels    = imageData.data;
+    let transparent = 0;
+
+    // Every 4th index = alpha channel
+    for (let i = 3; i < pixels.length; i += 4) {
+      if (pixels[i] === 0) transparent++;
     }
-    function erase(x,y){
-      ctx.save(); ctx.globalCompositeOperation='destination-out';
-      ctx.beginPath(); ctx.arc(x,y,22,0,Math.PI*2); ctx.fill();
-      ctx.restore(); check();
-    }
-    function eraseLine(x1,y1,x2,y2){
-      ctx.save(); ctx.globalCompositeOperation='destination-out';
-      ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=40;
-      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-      ctx.restore(); check();
-    }
-    function check(){
-      if(revealed.get(cv.id)) return;
-      const dW=cv.width, dH=cv.height;
-      const d=ctx.getImageData(0,0,dW,dH).data;
-      let tot=0,tr=0;
-      for(let y=0;y<dH;y+=4) for(let x=0;x<dW;x+=4){
-        if((x-dW/2)**2+(y-dH/2)**2>(Math.min(dW,dH)/2)**2) continue;
-        tot++;
-        if(d[(y*dW+x)*4+3]<100) tr++;
-      }
-      if(tot>0&&tr/tot>.6){
-        revealed.set(cv.id,true);
-        // auto-clear remaining
-        ctx.save(); ctx.globalCompositeOperation='destination-out';
-        ctx.beginPath(); ctx.arc(W/2,H/2,R,0,Math.PI*2); ctx.fill();
-        ctx.restore();
-        const hEl=document.getElementById(cv.id.replace('sc-','hint-'));
-        if(hEl) hEl.style.opacity='0';
-        let all=true; revealed.forEach(v=>{if(!v)all=false;});
-        if(all){setTimeout(()=>revealMsg.classList.add('show'),200);setTimeout(launchConfetti,400);}
-      }
-    }
-  
-    cv.addEventListener('mousedown',e=>{drag=true;const p=pos(e);lx=p.x;ly=p.y;erase(p.x,p.y);});
-    cv.addEventListener('mousemove',e=>{if(!drag)return;const p=pos(e);eraseLine(lx,ly,p.x,p.y);lx=p.x;ly=p.y;});
-    cv.addEventListener('mouseup',()=>drag=false);
-    cv.addEventListener('mouseleave',()=>drag=false);
-    cv.addEventListener('touchstart',e=>{e.preventDefault();drag=true;const p=pos(e);lx=p.x;ly=p.y;erase(p.x,p.y);},{passive:false});
-    cv.addEventListener('touchmove',e=>{e.preventDefault();if(!drag)return;const p=pos(e);eraseLine(lx,ly,p.x,p.y);lx=p.x;ly=p.y;},{passive:false});
-    cv.addEventListener('touchend',()=>drag=false);
+
+    return transparent / (canvas.width * canvas.height);
   }
-  
-  /* ════ CONFETTI ════ */
-  function launchConfetti(){
-    const box=document.getElementById('confettiBox'); if(!box) return;
-    const cols=['#B8841E','#D4A83A','#527A2E','#3D6222','#EAC85A','#2E4A1A','#F5EDD8'];
-    const N=65,pieces=[];
-    for(let i=0;i<N;i++){
-      const el=document.createElement('div');
-      const c=cols[i%cols.length],sz=5+Math.random()*7,ir=Math.random()>.5;
-      Object.assign(el.style,{position:'absolute',left:Math.random()*100+'%',top:'-20px',
-        width:(ir?sz*.5:sz)+'px',height:(ir?sz*2:sz)+'px',background:c,
-        borderRadius:Math.random()>.6?'50%':'1px',opacity:(.7+Math.random()*.3).toString(),pointerEvents:'none'});
-      box.appendChild(el);
-      pieces.push({el,y:-20,vx:(Math.random()-.5)*2.8,vy:2+Math.random()*3,rot:Math.random()*360,rv:(Math.random()-.5)*9,g:.1+Math.random()*.1,done:false});
-    }
-    const bH=box.offsetHeight||400;
-    let aid,f=0;
-    function tick(){f++;let alive=false;
-      pieces.forEach(p=>{if(p.done)return;p.vy+=p.g;p.vx+=Math.sin(f*.04)*.03;p.y+=p.vy;p.rot+=p.rv;
-        if(p.y>bH+30){p.done=true;p.el.remove();return;}alive=true;
-        p.el.style.transform=`translate(${p.vx*f*.04}px,${p.y}px) rotate(${p.rot}deg)`;});
-      if(alive)aid=requestAnimationFrame(tick); else cancelAnimationFrame(aid);}
-    aid=requestAnimationFrame(tick);
+
+  /**
+   * Get canvas-relative coordinates from a pointer/touch event
+   */
+  function getPos(canvas, e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width  / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    // Support both mouse and touch
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top)  * scaleY,
+    };
   }
-  
-  /* ════ SCROLL REVEAL ════ */
-  (function(){
-    const els=document.querySelectorAll('.sr');
-    if(!els.length) return;
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
-    },{threshold:.08,rootMargin:'0px 0px -24px 0px'});
-    els.forEach(el=>obs.observe(el));
-  })();
-  
-  /* ════ COUNTDOWN ════ */
-  (function(){
-    const target=new Date('2026-06-06T10:00:00+07:00').getTime();
-    const els=['cdD','cdH','cdM','cdS'].map(id=>document.getElementById(id));
-    const pad=n=>String(Math.max(0,n)).padStart(2,'0');
-    function tick(){
-      const d=target-Date.now();
-      if(d<=0){els.forEach(e=>{if(e)e.textContent='00'});return;}
-      if(els[0])els[0].textContent=pad(Math.floor(d/86400000));
-      if(els[1])els[1].textContent=pad(Math.floor(d%86400000/3600000));
-      if(els[2])els[2].textContent=pad(Math.floor(d%3600000/60000));
-      if(els[3])els[3].textContent=pad(Math.floor(d%60000/1000));
+
+  /**
+   * Apply scratch erase effect at position (x,y) on a canvas
+   */
+  function scratch(canvas, x, y) {
+    const ctx    = canvas.getContext('2d');
+    const radius = canvas.width * 0.12; // finger-friendly radius
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /**
+   * Check if all circles are ≥ 90% revealed; trigger confetti if so
+   */
+  function checkAllRevealed() {
+    const allDone = Object.values(completionState).every(
+      (pct) => pct >= SCRATCH_THRESHOLD
+    );
+
+    if (allDone && !confettiTriggered) {
+      confettiTriggered = true;
+      hintEl.classList.add('is-revealed');
+      Confetti.launch();
     }
-    tick(); setInterval(tick,1000);
-  })();
-  
-  /* ════ MISC ════ */
-  (function(){
-    const btn=document.getElementById('musicBtn');
-    const aud=document.getElementById('bgAudio');
-    let on=false;
-    if(btn) btn.addEventListener('click',()=>{on=!on;btn.classList.toggle('playing',on);if(aud.src&&aud.src!==location.href){on?aud.play().catch(()=>{}):aud.pause();}});
-    const cb=document.getElementById('copyBtn'),an=document.getElementById('accNum');
-    if(cb&&an) cb.addEventListener('click',()=>{
-      navigator.clipboard&&navigator.clipboard.writeText(an.textContent.replace(/\s/g,'')).catch(()=>{});
-      const o=cb.textContent;cb.textContent='Tersalin!';cb.classList.add('ok');
-      setTimeout(()=>{cb.textContent=o;cb.classList.remove('ok');},2000);
+  }
+
+  /**
+   * Set up scratch interaction for a single canvas
+   */
+  function initCanvas(canvas, key) {
+    drawGoldLayer(canvas);
+
+    let isScratching = false;
+
+    // ——— Pointer / Mouse events ———
+    canvas.addEventListener('pointerdown', (e) => {
+      isScratching = true;
+      e.preventDefault();
+      const pos = getPos(canvas, e);
+      scratch(canvas, pos.x, pos.y);
     });
-    document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>{
-      document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');
-    }));
-    // Parallax hero
-    const hf=document.querySelector('.hero-floral');
-    if(hf&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
-      let t=false;
-      window.addEventListener('scroll',()=>{if(!t){requestAnimationFrame(()=>{hf.style.transform=`translateY(${scrollY*.1}px)`;t=false;});t=true;}},{passive:true});
+
+    canvas.addEventListener('pointermove', (e) => {
+      if (!isScratching) return;
+      e.preventDefault();
+      const pos = getPos(canvas, e);
+      scratch(canvas, pos.x, pos.y);
+
+      // Update completion every ~5 pixels of movement
+      const pct = getScratchPercent(canvas);
+      completionState[key] = pct;
+      checkAllRevealed();
+
+      // Fade canvas once threshold reached
+      if (pct >= SCRATCH_THRESHOLD && canvas.style.opacity !== '0') {
+        canvas.style.transition = 'opacity 0.8s ease';
+        canvas.style.opacity = '0';
+        canvas.style.pointerEvents = 'none';
+      }
+    });
+
+    canvas.addEventListener('pointerup',    () => { isScratching = false; });
+    canvas.addEventListener('pointerleave', () => { isScratching = false; });
+
+    // ——— Touch events (fallback for older mobile) ———
+    canvas.addEventListener('touchstart', (e) => {
+      isScratching = true;
+      e.preventDefault();
+      const pos = getPos(canvas, e);
+      scratch(canvas, pos.x, pos.y);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (!isScratching) return;
+      e.preventDefault();
+      const pos = getPos(canvas, e);
+      scratch(canvas, pos.x, pos.y);
+
+      const pct = getScratchPercent(canvas);
+      completionState[key] = pct;
+      checkAllRevealed();
+
+      if (pct >= SCRATCH_THRESHOLD && canvas.style.opacity !== '0') {
+        canvas.style.transition = 'opacity 0.8s ease';
+        canvas.style.opacity = '0';
+        canvas.style.pointerEvents = 'none';
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', () => { isScratching = false; });
+  }
+
+  function init() {
+    canvases.forEach((canvas, i) => {
+      // Set actual canvas internal resolution (matches display)
+      const wrapper = canvas.parentElement;
+      const size    = Math.round(wrapper.offsetWidth || 160);
+      canvas.width  = size;
+      canvas.height = size;
+
+      initCanvas(canvas, completionKeys[i]);
+    });
+  }
+
+  return { init };
+
+})();
+
+
+/* ============================================================
+   3. CONFETTI MODULE (Section-scoped, lightweight)
+============================================================ */
+const Confetti = (() => {
+
+  const canvas  = document.getElementById('confetti-canvas');
+  const ctx     = canvas.getContext('2d');
+  const section = document.getElementById('reveal-date');
+
+  // Color palette: burgundy + gold shades
+  const COLORS = [
+    '#6B1A2A', '#8B2E3E', '#4A0E1A',  // burgundy shades
+    '#9C7A2E', '#C4973A', '#D4B86A',  // gold shades
+    '#F0D070', '#B8861E',              // bright gold
+  ];
+
+  let particles = [];
+  let animId    = null;
+  let running   = false;
+  let stopAfter = 4000; // ms of confetti before natural fade
+  let startTime = null;
+
+  /** Create one confetti particle */
+  function createParticle() {
+    return {
+      x:       Math.random() * canvas.width,
+      y:       -(Math.random() * canvas.height * 0.5),  // start above view
+      w:       Math.random() * 7 + 5,  // width  5–12px
+      h:       Math.random() * 4 + 3,  // height 3–7px
+      color:   COLORS[Math.floor(Math.random() * COLORS.length)],
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.12,
+      vx:      (Math.random() - 0.5) * 1.8,  // horizontal drift
+      vy:      Math.random() * 2.5 + 1.5,    // gravity (downward)
+      opacity: 0.85 + Math.random() * 0.15,
+    };
+  }
+
+  /** Resize canvas to section bounds */
+  function resizeCanvas() {
+    const rect = section.getBoundingClientRect();
+    canvas.width  = section.offsetWidth;
+    canvas.height = section.offsetHeight;
+  }
+
+  /** Animation loop */
+  function animate(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Spawn new particles for the first stopAfter ms
+    if (elapsed < stopAfter && particles.length < 120) {
+      const spawn = Math.floor(Math.random() * 4) + 1;
+      for (let i = 0; i < spawn; i++) {
+        particles.push(createParticle());
+      }
     }
-  })();
+
+    // Update + draw
+    particles = particles.filter((p) => {
+      p.x        += p.vx;
+      p.y        += p.vy;
+      p.rotation += p.rotSpeed;
+      p.vx       += (Math.random() - 0.5) * 0.05; // slight wind wobble
+
+      // Fade out when near bottom
+      if (p.y > canvas.height * 0.85) {
+        p.opacity -= 0.02;
+      }
+
+      if (p.opacity <= 0 || p.y > canvas.height + 20) return false; // remove
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle   = p.color;
+
+      // Alternate between rectangles and diamonds
+      if (Math.random() > 0.997) {
+        // tiny circle
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
+
+      ctx.restore();
+      return true;
+    });
+
+    // Stop when all particles gone and spawn phase is over
+    if (elapsed > stopAfter && particles.length === 0) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      running = false;
+      return;
+    }
+
+    animId = requestAnimationFrame(animate);
+  }
+
+  /** Public: start the confetti */
+  function launch() {
+    if (running) return;
+    running   = true;
+    startTime = null;
+    particles = [];
+    resizeCanvas();
+    animId = requestAnimationFrame(animate);
+  }
+
+  return { launch };
+
+})();
+
+
+/* ============================================================
+   4. COUNTDOWN TIMER MODULE
+============================================================ */
+const Countdown = (() => {
+
+  const elDays    = document.getElementById('count-days');
+  const elHours   = document.getElementById('count-hours');
+  const elMinutes = document.getElementById('count-minutes');
+  const elSeconds = document.getElementById('count-seconds');
+
+  /** Format a number to always 2 digits */
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  /** Animate number flip when value changes */
+  function flash(el, val) {
+    const prev = el.textContent;
+    if (prev === val) return;
+    el.textContent = val;
+    el.style.transform = 'translateY(-4px)';
+    el.style.opacity   = '0.6';
+    el.style.transition = 'none';
+    requestAnimationFrame(() => {
+      el.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
+      el.style.transform  = 'translateY(0)';
+      el.style.opacity    = '1';
+    });
+  }
+
+  function tick() {
+    const now  = Date.now();
+    const diff = WEDDING_DATE.getTime() - now;
+
+    if (diff <= 0) {
+      // Wedding day has passed
+      flash(elDays,    '00');
+      flash(elHours,   '00');
+      flash(elMinutes, '00');
+      flash(elSeconds, '00');
+      return;
+    }
+
+    const totalSec = Math.floor(diff / 1000);
+    const days     = Math.floor(totalSec / 86400);
+    const hours    = Math.floor((totalSec % 86400) / 3600);
+    const minutes  = Math.floor((totalSec % 3600)  / 60);
+    const seconds  = totalSec % 60;
+
+    flash(elDays,    pad(days));
+    flash(elHours,   pad(hours));
+    flash(elMinutes, pad(minutes));
+    flash(elSeconds, pad(seconds));
+  }
+
+  function init() {
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  return { init };
+
+})();
+
+
+/* ============================================================
+   5. MUSIC PLAYER MODULE (Web Audio API — ambient tone)
+============================================================ */
+const MusicPlayer = (() => {
+
+  const btn      = document.getElementById('music-btn');
+  const iconPlay = btn.querySelector('.music-btn__icon--play');
+  const iconPause = btn.querySelector('.music-btn__icon--pause');
+
+  let audioCtx   = null;
+  let masterGain = null;
+  let playing    = false;
+  let oscillators = [];
+
+  /**
+   * Build a gentle ambient music cluster using Web Audio API oscillators
+   * (strings-like, romantic, minimal)
+   */
+  function buildAudio() {
+    if (audioCtx) return; // already built
+
+    audioCtx   = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    masterGain.connect(audioCtx.destination);
+
+    // Reverb via ConvolverNode (impulse response approximation)
+    const convolver = audioCtx.createConvolver();
+    const irLength  = audioCtx.sampleRate * 3;
+    const irBuffer  = audioCtx.createBuffer(2, irLength, audioCtx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const data = irBuffer.getChannelData(ch);
+      for (let i = 0; i < irLength; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / irLength, 3);
+      }
+    }
+    convolver.buffer = irBuffer;
+    convolver.connect(masterGain);
+
+    // Romantic string-like chord: A major (A3-E4-A4-C#5)
+    // Use sawtooth + heavy filtering = bowed strings approximation
+    const notes = [220, 329.63, 440, 554.37]; // A3, E4, A4, C#5
+    notes.forEach((freq, i) => {
+      // Detuned pair for warmth
+      [-3, 0, 3].forEach((detune) => {
+        const osc    = audioCtx.createOscillator();
+        const gain   = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        osc.type       = 'sawtooth';
+        osc.frequency.value = freq;
+        osc.detune.value    = detune;
+
+        filter.type            = 'lowpass';
+        filter.frequency.value = 600 + i * 100;
+        filter.Q.value         = 0.8;
+
+        gain.gain.value = 0.04 / notes.length;
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(convolver);
+
+        osc.start();
+        oscillators.push(osc);
+      });
+    });
+
+    // Gentle bass drone (D2)
+    const bass = audioCtx.createOscillator();
+    const bassGain = audioCtx.createGain();
+    const bassFilter = audioCtx.createBiquadFilter();
+    bass.type = 'sine';
+    bass.frequency.value = 73.42;
+    bassFilter.type = 'lowpass';
+    bassFilter.frequency.value = 200;
+    bassGain.gain.value = 0.08;
+    bass.connect(bassFilter);
+    bassFilter.connect(bassGain);
+    bassGain.connect(masterGain);
+    bass.start();
+    oscillators.push(bass);
+  }
+
+  function fadeIn() {
+    if (!audioCtx) buildAudio();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 2.5);
+    playing = true;
+  }
+
+  function fadeOut() {
+    if (!masterGain) return;
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2);
+    setTimeout(() => { if (audioCtx) audioCtx.suspend(); }, 2100);
+    playing = false;
+  }
+
+  function toggle() {
+    if (playing) {
+      fadeOut();
+      btn.setAttribute('aria-pressed', 'false');
+      btn.classList.add('is-paused');
+      iconPlay.style.display  = '';
+      iconPause.style.display = 'none';
+    } else {
+      fadeIn();
+      btn.setAttribute('aria-pressed', 'true');
+      btn.classList.remove('is-paused');
+      iconPlay.style.display  = 'none';
+      iconPause.style.display = '';
+    }
+  }
+
+  function init() {
+    btn.addEventListener('click', toggle);
+  }
+
+  return { init };
+
+})();
+
+
+/* ============================================================
+   6. SCROLL REVEAL MODULE (IntersectionObserver)
+============================================================ */
+const ScrollReveal = (() => {
+
+  let observer = null;
+
+  function init() {
+    const sections = document.querySelectorAll('.reveal-section');
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          // Unobserve after reveal (performance)
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,       // trigger when 12% visible
+      rootMargin: '0px 0px -40px 0px',  // slight offset from bottom
+    });
+
+    sections.forEach((el) => observer.observe(el));
+  }
+
+  return { init };
+
+})();
+
+
+/* ============================================================
+   7. LANGUAGE TOGGLE MODULE (disabled — undangan dalam Bahasa Indonesia)
+============================================================ */
+const LangToggle = (() => {
+  function init() { /* tidak digunakan */ }
+  return { init };
+})();
+
+
+/* ============================================================
+   8. PARALLAX (subtle, mobile-safe)
+============================================================ */
+const Parallax = (() => {
+
+  // Only apply on non-touch devices for performance
+  const isTouchDevice = () =>
+    window.matchMedia('(hover: none)').matches;
+
+  function init() {
+    if (isTouchDevice()) return;
+
+    const illustrations = document.querySelectorAll(
+      '.villa-svg, .decoration'
+    );
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      illustrations.forEach((el) => {
+        const rect   = el.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const offset = (window.innerHeight / 2 - center) * 0.06;
+        el.style.transform = `translateY(${offset.toFixed(1)}px)`;
+      });
+    }, { passive: true });
+  }
+
+  return { init };
+
+})();
+
+
+/* ============================================================
+   MAIN INIT — Boot all modules when DOM is ready
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Always init on load:
+  CurtainIntro.init();   // curtain gate — controls page unlock
+  Countdown.init();      // start timer immediately
+  LangToggle.init();     // language switcher
+  MusicPlayer.init();    // music button (doesn't play until clicked)
+  Parallax.init();       // subtle scroll parallax
+
+  // ScratchCards and ScrollReveal are initialized after curtains open
+  // (called from CurtainIntro.revealMainContent → ScrollReveal.init)
+  // ScratchCards needs the wrapper dimensions, so init after visibility:
+  setTimeout(() => {
+    ScratchCards.init();
+  }, 200);
+
+  // Handle window resize: redraw scratch canvases if needed
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Re-init scratch if sizes have changed significantly
+      // (lightweight: only redraws unfilled canvases)
+    }, 300);
+  });
+
+  // Smooth anchor scroll for any internal links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+});
