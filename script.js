@@ -1,17 +1,3 @@
-/**
- * script.js — Luxury Wedding Invitation
- * Alessandro & Valentina · June 14, 2025
- *
- * Modules:
- *  1. CurtainIntro    — Theater curtain open animation
- *  2. ScratchCards    — Canvas-based gold scratch effect
- *  3. Confetti        — Particle system (burgundy + gold)
- *  4. Countdown       — Live countdown timer
- *  5. MusicPlayer     — Web Audio API ambient music
- *  6. ScrollReveal    — IntersectionObserver fade-in
- *  7. LangToggle      — EN/IT mock switcher
- */
-
 'use strict';
 
 /* ============================================================
