@@ -532,126 +532,35 @@ const Countdown = (() => {
    5. MUSIC PLAYER MODULE (Web Audio API — ambient tone)
 ============================================================ */
 const MusicPlayer = (() => {
-
-  const btn      = document.getElementById('music-btn');
-  const iconPlay = btn.querySelector('.music-btn__icon--play');
+  const btn       = document.getElementById('music-btn');
+  const audio     = document.getElementById('bg-music');
+  const iconPlay  = btn.querySelector('.music-btn__icon--play');
   const iconPause = btn.querySelector('.music-btn__icon--pause');
-
-  let audioCtx   = null;
-  let masterGain = null;
-  let playing    = false;
-  let oscillators = [];
-
-  /**
-   * Build a gentle ambient music cluster using Web Audio API oscillators
-   * (strings-like, romantic, minimal)
-   */
-  function buildAudio() {
-    if (audioCtx) return; // already built
-
-    audioCtx   = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = audioCtx.createGain();
-    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    masterGain.connect(audioCtx.destination);
-
-    // Reverb via ConvolverNode (impulse response approximation)
-    const convolver = audioCtx.createConvolver();
-    const irLength  = audioCtx.sampleRate * 3;
-    const irBuffer  = audioCtx.createBuffer(2, irLength, audioCtx.sampleRate);
-    for (let ch = 0; ch < 2; ch++) {
-      const data = irBuffer.getChannelData(ch);
-      for (let i = 0; i < irLength; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / irLength, 3);
-      }
-    }
-    convolver.buffer = irBuffer;
-    convolver.connect(masterGain);
-
-    // Romantic string-like chord: A major (A3-E4-A4-C#5)
-    // Use sawtooth + heavy filtering = bowed strings approximation
-    const notes = [220, 329.63, 440, 554.37]; // A3, E4, A4, C#5
-    notes.forEach((freq, i) => {
-      // Detuned pair for warmth
-      [-3, 0, 3].forEach((detune) => {
-        const osc    = audioCtx.createOscillator();
-        const gain   = audioCtx.createGain();
-        const filter = audioCtx.createBiquadFilter();
-
-        osc.type       = 'sawtooth';
-        osc.frequency.value = freq;
-        osc.detune.value    = detune;
-
-        filter.type            = 'lowpass';
-        filter.frequency.value = 600 + i * 100;
-        filter.Q.value         = 0.8;
-
-        gain.gain.value = 0.04 / notes.length;
-
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(convolver);
-
-        osc.start();
-        oscillators.push(osc);
-      });
-    });
-
-    // Gentle bass drone (D2)
-    const bass = audioCtx.createOscillator();
-    const bassGain = audioCtx.createGain();
-    const bassFilter = audioCtx.createBiquadFilter();
-    bass.type = 'sine';
-    bass.frequency.value = 73.42;
-    bassFilter.type = 'lowpass';
-    bassFilter.frequency.value = 200;
-    bassGain.gain.value = 0.08;
-    bass.connect(bassFilter);
-    bassFilter.connect(bassGain);
-    bassGain.connect(masterGain);
-    bass.start();
-    oscillators.push(bass);
-  }
-
-  function fadeIn() {
-    if (!audioCtx) buildAudio();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 2.5);
-    playing = true;
-  }
-
-  function fadeOut() {
-    if (!masterGain) return;
-    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2);
-    setTimeout(() => { if (audioCtx) audioCtx.suspend(); }, 2100);
-    playing = false;
-  }
+  let playing = false;
 
   function toggle() {
     if (playing) {
-      fadeOut();
+      audio.pause();
       btn.setAttribute('aria-pressed', 'false');
       btn.classList.add('is-paused');
       iconPlay.style.display  = '';
       iconPause.style.display = 'none';
     } else {
-      fadeIn();
+      audio.play().catch(() => {});
       btn.setAttribute('aria-pressed', 'true');
       btn.classList.remove('is-paused');
       iconPlay.style.display  = 'none';
       iconPause.style.display = '';
     }
+    playing = !playing;
   }
 
   function init() {
+    audio.volume = 0.5; // atur volume 0.0 - 1.0
     btn.addEventListener('click', toggle);
   }
 
   return { init };
-
 })();
 
 
