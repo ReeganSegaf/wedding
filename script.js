@@ -55,6 +55,26 @@ const CurtainIntro = (() => {
     // 1. Hide the CTA button
     introCta.classList.add('is-hidden');
 
+    // Auto-play musik saat undangan dibuka (interaksi user = diizinkan browser)
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    if (audio) {
+      audio.volume = 0.5;
+      audio.play().then(() => {
+        // Update tampilan tombol musik jadi "pause"
+        const iconPlay  = musicBtn.querySelector('.music-btn__icon--play');
+        const iconPause = musicBtn.querySelector('.music-btn__icon--pause');
+        musicBtn.setAttribute('aria-pressed', 'true');
+        musicBtn.classList.remove('is-paused');
+        iconPlay.style.display  = 'none';
+        iconPause.style.display = '';
+        // Sync state di MusicPlayer
+        MusicPlayer.setPlaying(true);
+      }).catch(() => {
+        // Gagal autoplay (misalnya Safari dengan blokir ketat), biarkan user klik manual
+      });
+    }
+
     // Small delay before curtains start moving (cinematic beat)
     setTimeout(() => {
 
@@ -560,7 +580,12 @@ const MusicPlayer = (() => {
     btn.addEventListener('click', toggle);
   }
 
-  return { init };
+  /** Sync state dari luar (misal saat autoplay dari CurtainIntro) */
+  function setPlaying(state) {
+    playing = state;
+  }
+
+  return { init, setPlaying };
 })();
 
 
